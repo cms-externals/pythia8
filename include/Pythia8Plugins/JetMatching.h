@@ -1035,7 +1035,7 @@ inline bool JetMatchingMadgraph::initAfterBeams() {
   // Initialise chosen jet algorithm.
   // Currently, this only supports the kT-algorithm in SlowJet.
   // Use the QCD distance measure by default.
-  jetAlgorithm = 2; 
+  jetAlgorithm = 2;
   slowJetPower = 1;
   slowJet = new SlowJet(slowJetPower, coneRadius, eTjetMin,
     etaJetMaxAlgo, 2, 2, NULL, false);
@@ -1408,8 +1408,6 @@ inline void JetMatchingMadgraph::jetAlgorithmInput(const Event &event,
 
   bool oldBehavior = false;
 
-  //  if( !oldBehavior && iType==2 ) return;
-
   // Take input from 'workEvent' and put output in 'workEventJet'
   workEventJet = workEvent;  
    
@@ -1429,46 +1427,38 @@ inline void JetMatchingMadgraph::jetAlgorithmInput(const Event &event,
 	  workEventJet[i].statusNeg();
 	  continue;
 	}
-      } else {
-	// Remove all non-QCD partons from veto list
-	//if( workEventJet[i].colType() != 0 ) {
-	//  workEventJet[i].statusNeg();
-	//  continue;
-	//}
-	;
       }
     }
 
     // Get the index of this particle in original event
     int idx = workEventJet[i].daughter1();
 
-    
     // Start with particle idx, and afterwards track mothers
     while (true) {
 
       // Light jets
       if (iType == 0) {
 
-	// Do not include if originates from heavy jet or 'other'
-	if (typeSet[1].find(idx) != typeSet[1].end() ||
-	    typeSet[2].find(idx) != typeSet[2].end()) {
+        // Do not include if originates from heavy jet or 'other'
+        if (typeSet[1].find(idx) != typeSet[1].end() ||
+           typeSet[2].find(idx) != typeSet[2].end()) {
 	  workEventJet[i].statusNeg();
-	  break;
-	}
+          break;
+        }
 
-	// Made it to start of event record so done
-	if (idx == 0) break;
-	// Otherwise next mother and continue
-	idx = event[idx].mother1();
+        // Made it to start of event record so done
+        if (idx == 0) break;
+        // Otherwise next mother and continue
+        idx = event[idx].mother1();
 
-	// Heavy jets
+      // Heavy jets
       } else if (iType == 1) {
 
-	// Only include if originates from heavy jet
-	if (typeSet[1].find(idx) != typeSet[1].end()) break;
+        // Only include if originates from heavy jet
+        if (typeSet[1].find(idx) != typeSet[1].end()) break;
 
-	// Made it to start of event record with no heavy jet mother,
-	// so DO NOT include particle
+        // Made it to start of event record with no heavy jet mother,
+        // so DO NOT include particle
 	if (idx == 0) {
 	  workEventJet[i].statusNeg();
 	  break;
@@ -1477,7 +1467,7 @@ inline void JetMatchingMadgraph::jetAlgorithmInput(const Event &event,
 	// Otherwise next mother and continue
 	idx = event[idx].mother1();
 
-	// Other jets
+      // Other jets
       } else if (iType == 2) {
 
 	// Only include if originates from other jet
