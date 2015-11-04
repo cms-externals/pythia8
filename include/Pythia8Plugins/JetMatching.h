@@ -1442,7 +1442,7 @@ inline void JetMatchingMadgraph::jetAlgorithmInput(const Event &event,
         // Do not include if originates from heavy jet or 'other'
         if (typeSet[1].find(idx) != typeSet[1].end() ||
            typeSet[2].find(idx) != typeSet[2].end()) {
-	  workEventJet[i].statusNeg();
+          workEventJet[i].statusNeg();
           break;
         }
 
