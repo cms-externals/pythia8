@@ -1441,7 +1441,7 @@ inline void JetMatchingMadgraph::jetAlgorithmInput(const Event &event,
 
         // Do not include if originates from heavy jet or 'other'
         if (typeSet[1].find(idx) != typeSet[1].end() ||
-           typeSet[2].find(idx) != typeSet[2].end()) {
+            typeSet[2].find(idx) != typeSet[2].end()) {
           workEventJet[i].statusNeg();
           break;
         }
@@ -1829,24 +1829,6 @@ inline int JetMatchingMadgraph::matchPartonsToJetsHeavy() {
     if( hjSlowJet->pT(idx) > sqrt(qCutSq) ) nCLjets++;
   }
   
-  /*  // Initialize SlowJet with current working event
-  if (!slowJet->setup(workEventJet) ) {
-    infoPtr->errorMsg("Warning in JetMatchingMadgraph:matchPartonsToJets"
-      "Heavy: the SlowJet algorithm failed on setup");
-    return NONE;
-  }
-  double localQcutSq = qCutSq;
-  //  double dOld;
-  // Cluster in steps to find all hadronic jets at the scale qCut
-  while ( slowJet->sizeAll() - slowJet->sizeJet() > 0 ) {
-    if( slowJet->dNext() > localQcutSq ) break;
-    //  dOld = slowJet->dNext();
-    slowJet->doStep();
-  }
-  int nJets = slowJet->sizeJet();
-  int nClus = slowJet->sizeAll();
-  */
-
   // Debug printout.
   if (MATCHINGDEBUG) hjSlowJet->list(true);
 
