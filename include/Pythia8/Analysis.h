@@ -503,7 +503,7 @@ public:
     jtSize--;
   }
 
-private:
+protected:
 
   // Constants: could only be changed in the code itself.
   static const int    TIMESTOPRINT;
