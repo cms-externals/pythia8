@@ -53,11 +53,6 @@ void HJSlowJet::findNext() {
     dMin = 1.0/TINY;
     // Remove the possibility of choosing a beam clustering
     for (int i = 1; i < clSize; ++i) {
-      /*      if (diB[i] < dMin) {
-        iMin = i;
-        jMin = -1;
-        dMin = diB[i];
-	}*/
       for (int j = 0; j < i; ++j) {
         if (dij[i*(i-1)/2 + j] < dMin) {
           iMin = i;
