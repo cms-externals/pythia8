@@ -28,7 +28,7 @@ class HJSlowJet: public SlowJet {
 
  public:
   HJSlowJet(int powerIn, double Rin, double pTjetMinIn = 0.,
-	    double etaMaxIn = 25., int selectIn = 2, int massSetIn = 2,
+	    double etaMaxIn = 25., int selectIn = 1, int massSetIn = 2,
 	    SlowJetHook* sjHookPtrIn = 0, bool useFJcoreIn = false,
 	    bool useStandardRin = true) :
   SlowJet(powerIn, Rin, pTjetMinIn, etaMaxIn, selectIn, massSetIn,
@@ -1052,7 +1052,7 @@ inline bool JetMatchingMadgraph::initAfterBeams() {
 
   // A special version of SlowJet to handle heavy and other partons
   hjSlowJet = new HJSlowJet(slowJetPower, coneRadius, 0.0,
-    100.0, 2, 2, NULL, false, true);  
+    100.0, 1, 2, NULL, false, true);  
 
   // Setup local event records
   eventProcessOrig.init("(eventProcessOrig)", particleDataPtr);
@@ -1339,7 +1339,7 @@ inline void JetMatchingMadgraph::sortIncomingProcess(const Event &event) {
   // Criteria:
   //   1 <= ID <= nQmatch, or ID == 21         --> light jet (typeIdx[0])
   //   nQMatch < ID                            --> heavy jet (typeIdx[1])
-  //   All else                                --> other     (typeIdx[2])
+  //   All else that is colored                --> other     (typeIdx[2])
   // Note that 'typeIdx' stores indices into 'eventProcess' (after resonance
   // decays are omitted), while 'typeSet' stores indices into the original
   // process record, 'eventProcessOrig', but these indices are also valid
@@ -1352,8 +1352,8 @@ inline void JetMatchingMadgraph::sortIncomingProcess(const Event &event) {
   for (int i = 0; i < eventProcess.size(); i++) {
     // Ignore non-final state and default to 'other'
     if (!eventProcess[i].isFinal()) continue;
-    int idx = 2;
-    int orig_idx = 2;
+    int idx = -1;
+    int orig_idx = -1;
 
     // Light jets: all gluons and quarks with id less than or equal to nQmatch
     if (eventProcess[i].id() == ID_GLUON
@@ -1371,11 +1371,11 @@ inline void JetMatchingMadgraph::sortIncomingProcess(const Event &event) {
       idx = 1;
       orig_idx = 1;
 
-    } else {
+    } else if (eventProcess[i].isQuark() || eventProcess[i].isGluon() ){
       idx = 2;
       orig_idx = 2;
     }
-
+    if( idx < 0 ) continue;
     // Store
     typeIdx[idx].push_back(i);
     typeSet[idx].insert(eventProcess[i].daughter1());
@@ -1424,6 +1424,12 @@ inline void JetMatchingMadgraph::jetAlgorithmInput(const Event &event,
       if( oldBehavior ) {
 	if ((id >= ID_LEPMIN && id <= ID_LEPMAX) || id == ID_TOP
 	    || id == ID_PHOTON || (id > nQmatch && id!=21)) {
+	  workEventJet[i].statusNeg();
+	  continue;
+	}
+      } else {
+	// Remove all non-QCD partons from veto list
+	if( workEventJet[i].colType() == 0 ) {
 	  workEventJet[i].statusNeg();
 	  continue;
 	}
@@ -1580,9 +1586,12 @@ inline int JetMatchingMadgraph::matchPartonsToJetsLight() {
     // For FxFx, in the non-highest multipicity, all jets need to matched to
     // partons. For nCLjets > nRequested, this is not possible. Hence, we can
     // veto here already.
-    if ( doFxFx && nRequested < nJetMax && nCLjets > nRequested )
+    if ( doFxFx && nRequested < nJetMax && nCLjets > nRequested ) {
+      if (MATCHINGDEBUG) cout << "veto : FxFx " << MORE_JETS << endl;
+      if (MATCHINGDEBUG) { cout << nRequested << " < " << nJetMax << " : " <<
+	  nCLjets << " > " << nRequested << endl; }
       return MORE_JETS;
-
+    }
     // Now continue in inclusive mode.
     // In inclusive mode, there can be more hadronic jets than partons,
     // provided that all partons are properly matched to hadronic jets.
@@ -1710,10 +1719,14 @@ inline int JetMatchingMadgraph::matchPartonsToJetsLight() {
 
   // Jet matching veto for FxFx
   if (doFxFx) {
-    if ( nRequested <  nJetMax && nMatched != nRequested )
+    if ( nRequested <  nJetMax && nMatched != nRequested ) {
+      if (MATCHINGDEBUG) cout << " veto : FxFx " << UNMATCHED_PARTON << endl;
       return UNMATCHED_PARTON;
-    if ( nRequested == nJetMax && nMatched <  nRequested )
+    }
+    if ( nRequested == nJetMax && nMatched <  nRequested ) {
+      if (MATCHINGDEBUG) cout << " veto : FxFx " << UNMATCHED_PARTON << endl;      
       return UNMATCHED_PARTON;
+    }
   }
 
   // Do jet matching for MLM.
