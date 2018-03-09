@@ -135,7 +135,7 @@ void LHAPDF6::init(string setName, int member, Info *info) {
       info->errorMsg("Error in LHAPDF6::init: could not initialize PDF "
                      + setName);
       return;
-    } else LHAPDF6Interface::initializedSets[id] = make_pair(pdfInfo,0);
+    } else LHAPDF6Interface::initializedSets[id] = make_pair(pdfInfo,1);
   } else {
     pair< LHAPDF6Interface::pdf_Info, int > &set
       = LHAPDF6Interface::initializedSets[id];
