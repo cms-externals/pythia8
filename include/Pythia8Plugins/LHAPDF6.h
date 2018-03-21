@@ -23,8 +23,8 @@ namespace LHAPDF6Interface {
 
   // Structure to hold all of the data needed to reproduce a set.
   struct pdf_Info {
-    ::LHAPDF::PDF *pdf;
-    vector< ::LHAPDF::PDF*> pdfs;
+    std::shared_ptr<::LHAPDF::PDF> pdf;
+    vector< std::shared_ptr<::LHAPDF::PDF>> pdfs;
     ::LHAPDF::PDFSet pdfSet;
   };
   // Define opened PDF sets global variable.
@@ -56,7 +56,7 @@ private:
   // The LHAPDF objects.
   int id;
   LHAPDF6Interface::pdf_Info pdfInfo;
-  ::LHAPDF::PDF *pdf;
+  std::shared_ptr<::LHAPDF::PDF> pdf;
   ::LHAPDF::Extrapolator *ext;
   bool extrapol;
 
@@ -128,8 +128,12 @@ void LHAPDF6::init(string setName, int member, Info *info) {
   } else if (LHAPDF6Interface::initializedSets.find(id) ==
              LHAPDF6Interface::initializedSets.end()) {
     pdfInfo.pdfSet = ::LHAPDF::PDFSet(setName);
-    pdfInfo.pdfs = pdfInfo.pdfSet.mkPDFs();
-    pdfInfo.pdf = ::LHAPDF::mkPDF(id);
+    auto pdfs =pdfInfo.pdfSet.mkPDFs();
+    pdfInfo.pdfs.reserve(pdfs.size());
+    for(auto p : pdfs) {
+      pdfInfo.pdfs.emplace_back(p);
+    }
+    pdfInfo.pdf = std::shared_ptr<::LHAPDF::PDF>( ::LHAPDF::mkPDF(id) );
     pdf = pdfInfo.pdf;
     if (!pdf) {
       info->errorMsg("Error in LHAPDF6::init: could not initialize PDF "
