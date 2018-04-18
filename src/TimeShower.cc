@@ -73,6 +73,10 @@ const double TimeShower::PROBLIMIT = 0.99;
 void TimeShower::init( BeamParticle* beamAPtrIn,
   BeamParticle* beamBPtrIn) {
 
+  // initialize bools
+  doTrialNow = false;
+  canEnhanceET = false;
+
   // Store input pointers for future use.
   beamAPtr           = beamAPtrIn;
   beamBPtr           = beamBPtrIn;
