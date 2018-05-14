@@ -32,7 +32,7 @@ class Event;
 class Particle {
 
 public:
-
+  virtual ~Particle();
   // Constructors.
   Particle() : idSave(0), statusSave(0), mother1Save(0), mother2Save(0),
     daughter1Save(0), daughter2Save(0), colSave(0), acolSave(0),
