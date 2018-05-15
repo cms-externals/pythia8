@@ -461,7 +461,7 @@ public:
   /// The default constructor is empty.
   SubCollisionModel(): sigTarg(8, 0.0), sigErr(8, 0.05), NInt(100000),
                        NGen(20), NPop(20), sigFuzz(0.2),
-                       fitPrint(true) {}
+                       fitPrint(true), projPtr(), targPtr(), sigTotPtr(), settingsPtr(), infoPtr(), rndPtr() {}
 
   /// Virtual destructor,
   virtual ~SubCollisionModel() {}

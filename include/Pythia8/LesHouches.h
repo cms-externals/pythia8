@@ -190,7 +190,7 @@ public:
 protected:
 
   // Constructor. Sets default to be that events come with unit weight.
-  LHAup(int strategyIn = 3) : fileName("void"), strategySave(strategyIn)
+  LHAup(int strategyIn = 3) : infoPtr(), nupSave(), idprupSave(), xwgtupSave(), scalupSave(), aqedupSave(), aqcdupSave(), xSecSumSave(), xErrSumSave(), getPDFSave(), getScale(), id1InSave(), id2InSave(), id1pdfInSave(), id2pdfInSave(), x1InSave(), x2InSave(), x1pdfInSave(), x2pdfInSave(), scalePDFInSave(), pdf1InSave(), pdf2InSave(), fileName("void"), dateNow(), timeNow(), strategySave(strategyIn), idBeamASave(), idBeamBSave(), eBeamASave(), eBeamBSave(), pdfGroupBeamASave(), pdfGroupBeamBSave(), pdfSetBeamASave(), pdfSetBeamBSave(), idProc(), weightProc(), scaleProc(), alphaQEDProc(), alphaQCDProc(), pdfIsSetSave(), id1Save(), id2Save(), id1pdfSave(), id2pdfSave(), x1Save(), x2Save(), x1pdfSave(), x2pdfSave(), scalePDFSave(), pdf1Save(), pdf2Save()
     { processes.reserve(10); particles.reserve(20);
     setBeamA( 0, 0., 0, 0); setBeamB( 0, 0., 0, 0); }
 

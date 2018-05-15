@@ -28,7 +28,7 @@ class TauDecays {
 public:
 
   // Constructor and destructor.
-  TauDecays() {};
+  TauDecays() : correlated(), tauExt(), tauMode(), tauMother(), tauPol(), hardME(), decayME(), infoPtr(), settingsPtr(), particleDataPtr(), rndmPtr(), couplingsPtr(), tau0Max(), tauMax(), rMax(), xyMax(), zMax(), limitTau0(), limitTau(), limitRadius(), limitCylinder(), limitDecay() {};
   ~TauDecays() {}
 
   // Initializer.

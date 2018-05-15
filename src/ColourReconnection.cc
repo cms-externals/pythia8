@@ -19,7 +19,7 @@ public:
 
   // Constructor.
   BeamDipole( int colIn = 0, int iColIn = 0, int iAcolIn = 0)
-    : col(colIn), iCol(iColIn), iAcol(iAcolIn) {}
+    : col(colIn), iCol(iColIn), iAcol(iAcolIn), p1p2() {}
 
   // Members.
   int    col, iCol, iAcol;

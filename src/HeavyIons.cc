@@ -271,7 +271,7 @@ bool HeavyIons::isHeavyIon(Settings & settings) {
 
 Angantyr::Angantyr(Pythia & mainPythiaIn)
   : HeavyIons(mainPythiaIn), hasSignal(true),
-    bGenPtr(0), projPtr(0), targPtr(0), collPtr(0) {
+    bGenPtr(0), projPtr(0), targPtr(0), collPtr(0), recoilerMode() {
   pythia.resize(ALL);
   pythiaNames.resize(ALL);
   pythiaNames[HADRON] = "HADRON";

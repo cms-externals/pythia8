@@ -31,7 +31,7 @@ class JunctionSplitting {
 public:
 
   // Constructor
-  JunctionSplitting() {}
+  JunctionSplitting() : eNormJunction(), allowDoubleJunRem(), infoPtr(), rndmPtr() {}
 
   // Initialization.
   void init(Info* infoPtrIn, Settings& settings, Rndm* rndmPtrIn,

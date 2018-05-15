@@ -121,7 +121,7 @@ public:
 protected:
 
   // Constructor.
-  PhaseSpace() {}
+  PhaseSpace() : sigmaProcessPtr(), infoPtr(), settingsPtr(), particleDataPtr(), rndmPtr(), beamAPtr(), beamBPtr(), couplingsPtr(), sigmaTotPtr(), userHooksPtr(), lhaUpPtr(), useBreitWigners(), doEnergySpread(), showSearch(), showViolation(), increaseMaximum(), hasQ2Min(), gmZmodeGlobal(), mHatGlobalMin(), mHatGlobalMax(), pTHatGlobalMin(), pTHatGlobalMax(), Q2GlobalMin(), pTHatMinDiverge(), minWidthBreitWigners(), idA(), idB(), mA(), mB(), eCM(), s(), hasLeptonBeamA(), hasLeptonBeamB(), hasOneLeptonBeam(), hasTwoLeptonBeams(), hasPointGammaA(), hasPointGammaB(), hasOnePointParticle(), hasTwoPointParticles(), newSigmaMx(), canModifySigma(), canBiasSelection(), canBias2Sel(), gmZmode(), bias2SelPow(), bias2SelRef(), wtBW(), sigmaNw(), sigmaMx(), sigmaPos(), sigmaNeg(), biasWt(), mHatMin(), mHatMax(), sHatMin(), sHatMax(), pTHatMin(), pTHatMax(), pT2HatMin(), pT2HatMax(), x1H(), x2H(), m3(), m4(), m5(), s3(), s4(), s5(), mHat(), sH(), tH(), uH(), pAbs(), p2Abs(), pTH(), theta(), phi(), betaZ(), mH(), idResA(), idResB(), mResA(), mResB(), GammaResA(), GammaResB(), tauResA(), tauResB(), widResA(), widResB(), sameResMass(), useMirrorWeight(), hasNegZ(), hasPosZ(), tau(), y(), z(), tauMin(), tauMax(), yMax(), zMin(), zMax(), ratio34(), unity34(), zNeg(), zPos(), wtTau(), wtY(), wtZ(), wt3Body(), runBW3H(), runBW4H(), runBW5H(), intTau0(), intTau1(), intTau2(), intTau3(), intTau4(), intTau5(), intTau6(), intY0(), intY12(), intY34(), intY56(), mTchan1(), sTchan1(), mTchan2(), sTchan2(), frac3Flat(), frac3Pow1(), frac3Pow2(), zNegMin(), zNegMax(), zPosMin(), zPosMax(), nTau(), nY(), nZ(), tauCoef(), yCoef(), zCoef(), tauCoefSum(), yCoefSum(), zCoefSum(), useBW(), idMass(), mPeak(), sPeak(), mWidth(), mMin(), mMax(), mw(), wmRat(), mLower(), mUpper(), sLower(), sUpper(), fracFlatS(), fracFlatM(), fracInv(), fracInv2(), atanLower(), atanUpper(), intBW(), intFlatS(), intFlatM(), intInv(), intInv2() {}
 
   // Constants: could only be changed in the code itself.
   static const int    NMAXTRY, NTRY3BODY;
@@ -352,7 +352,7 @@ class PhaseSpace2to2elastic : public PhaseSpace {
 public:
 
   // Constructor.
-  PhaseSpace2to2elastic() {}
+  PhaseSpace2to2elastic() : useCoulomb(), s1(), s2(), bSlope(), lambda12S(), tLow(), tUpp(), tAux(), sigmaTot(), rho(), lambda(), tAbsMin(), phaseCst(), alphaEM0(), sigmaNuc(), sigmaCou(), signCou() {}
 
   // Construct the trial or final event kinematics.
   virtual bool setupSampling();
@@ -387,7 +387,7 @@ public:
 
   // Constructor.
   PhaseSpace2to2diffractive(bool isDiffAin = false, bool isDiffBin = false)
-    : isDiffA(isDiffAin), isDiffB(isDiffBin) {}
+    : isDiffA(isDiffAin), isDiffB(isDiffBin), PomFlux(), epsilonPF(), alphaPrimePF(), m3ElDiff(), m4ElDiff(), s1(), s2(), lambda12(), lambda34(), tLow(), tUpp(), cRes(), sResXB(), sResAX(), sProton(), bMin(), bSlope(), bSlope1(), bSlope2(), probSlope1(), xIntPF(), xtCorPF(), mp24DL(), coefDL(), tAux(), tAux1(), tAux2(), sdpmax(), ddpmax(), dymin0(), dymax(), amx(), am1(), am2(), t(), eps(), alph(), alph2(), m2min(), dyminSD(), dyminDD(), dyminSigSD(), dyminSigDD() {}
 
   // Construct the trial or final event kinematics.
   virtual bool setupSampling();
@@ -429,7 +429,7 @@ class PhaseSpace2to3diffractive : public PhaseSpace {
 public:
 
   // Constructor.
-  PhaseSpace2to3diffractive() {}
+  PhaseSpace2to3diffractive() : PomFlux(), epsilonPF(), alphaPrimePF(), s1(), s2(), m5min(), s5min(), tLow(), tUpp(), bMin(), tAux(), bSlope1(), bSlope2(), probSlope1(), tAux1(), tAux2(), bSlope(), xIntPF(), xIntInvPF(), xtCorPF(), mp24DL(), coefDL(), epsMBR(), alphMBR(), m2minMBR(), dyminMBR(), dyminSigMBR(), dyminInvMBR(), dpepmax(), t1(), t2() {}
 
   // Construct the trial or final event kinematics.
   virtual bool setupSampling();
@@ -489,7 +489,7 @@ class PhaseSpace2to2nondiffractiveGamma : public PhaseSpace {
 public:
 
   // Constructor.
-  PhaseSpace2to2nondiffractiveGamma() {}
+  PhaseSpace2to2nondiffractiveGamma() : gammaKinPtr(), idAin(), idBin(), gammaA(), gammaB(), externalFlux(), sampleQ2(), Q2maxGamma(), Wmin(), sigmaNDestimate(), sigmaNDmax(), sCM(), alphaEM(), m2BeamA(), m2BeamB(), m2sA(), m2sB(), log2xMinA(), log2xMaxA(), log2xMinB(), log2xMaxB(), xGamma1(), xGamma2(), Q2gamma1(), Q2gamma2(), mGmGm(), Q2min1(), Q2min2() {}
 
   // Construct the trial or final event kinematics.
   virtual bool setupSampling();
@@ -562,7 +562,7 @@ class PhaseSpace2to3yyycyl : public PhaseSpace {
 public:
 
   // Constructor.
-  PhaseSpace2to3yyycyl() {}
+  PhaseSpace2to3yyycyl() : pTHat3Min(), pTHat3Max(), pTHat5Min(), pTHat5Max(), RsepMin(), R2sepMin(), hasBaryonBeams(), pT3Min(), pT3Max(), pT5Min(), pT5Max(), y3Max(), y4Max(), y5Max(), pT3(), pT4(), pT5(), phi3(), phi4(), phi5(), y3(), y4(), y5(), dphi() {}
 
   // Optimize subsequent kinematics selection.
   virtual bool setupSampling();
@@ -595,7 +595,7 @@ class PhaseSpaceLHA : public PhaseSpace {
 public:
 
   // Constructor.
-  PhaseSpaceLHA() {idProcSave = 0;}
+  PhaseSpaceLHA() : strategy(), stratAbs(), nProc(), xMaxAbsSum(), xSecSgnSum(), sigmaSgn() {idProcSave = 0;}
 
   // Find maximal cross section for comparison with internal processes.
   virtual bool setupSampling();

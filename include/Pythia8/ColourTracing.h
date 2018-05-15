@@ -24,7 +24,7 @@ class ColourTracing {
 public:
 
   // Constructor.
-  ColourTracing() {}
+  ColourTracing() : infoPtr() {}
 
   void init( Info* infoPtrIn) {infoPtr = infoPtrIn;}
 

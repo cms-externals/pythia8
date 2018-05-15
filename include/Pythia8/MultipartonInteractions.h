@@ -36,7 +36,7 @@ class SigmaMultiparton {
 public:
 
   // Constructor.
-  SigmaMultiparton() {}
+  SigmaMultiparton() : nChan(), sigmaTsum(), sigmaUsum(), pickOther(), pickedU(), rndmPtr() {}
 
   // Destructor.
   ~SigmaMultiparton() {
@@ -98,7 +98,7 @@ class MultipartonInteractions {
 public:
 
   // Constructor.
-  MultipartonInteractions() : bIsSet(false) {}
+  MultipartonInteractions() : allowRescatter(), allowDoubleRes(), canVetoMPI(), doPartonVertex(), pTmaxMatch(), alphaSorder(), alphaEMorder(), alphaSnfmax(), bProfile(), processLevel(), bSelScale(), rescatterMode(), nQuarkIn(), nSample(), enhanceScreening(), alphaSvalue(), Kfactor(), pT0Ref(), ecmRef(), ecmPow(), pTmin(), coreRadius(), coreFraction(), expPow(), ySepResc(), deltaYResc(), sigmaPomP(), mPomP(), pPomP(), mMaxPertDiff(), mMinPertDiff(), a1(), a0now(), a02now(), bstepNow(), a2max(), b2now(), enhanceBmax(), enhanceBnow(), id1Save(), id2Save(), pT2Save(), x1Save(), x2Save(), sHatSave(), tHatSave(), uHatSave(), alpSsave(), alpEMsave(), pT2FacSave(), pT2RenSave(), xPDF1nowSave(), xPDF2nowSave(), scaleLimitPTsave(), dSigmaDtSelSave(), vsc1(), vsc2(), hasBaryonBeams(), hasLowPow(), globalRecoilFSR(), iDiffSys(), nMaxGlobalRecoilFSR(), bSelHard(), eCM(), sCM(), pT0(), pT20(), pT2min(), pTmax(), pT2max(), pT20R(), pT20minR(), pT20maxR(), pT20min0maxR(), pT2maxmin(), sigmaND(), pT4dSigmaMax(), pT4dProbMax(), dSigmaApprox(), sigmaInt(), sudExpPT(), zeroIntCorr(), normOverlap(), nAvg(), kNow(), normPi(), bAvg(), bDiv(), probLowB(), radius2B(), radius2C(), fracA(), fracB(), fracC(), fracAhigh(), fracBhigh(), fracChigh(), fracABChigh(), expRev(), cDiv(), cMax(), enhanceBavg(), bIsSet(false), bSetInFirst(), isAtLowB(), pickOtherSel(), id1(), id2(), i1Sel(), i2Sel(), id1Sel(), id2Sel(), bNow(), enhanceB(), pT2(), pT2shift(), pT2Ren(), pT2Fac(), x1(), x2(), xT(), xT2(), tau(), y(), sHat(), tHat(), uHat(), alpS(), alpEM(), xPDF1now(), xPDF2now(), dSigmaSum(), x1Sel(), x2Sel(), sHatSel(), tHatSel(), uHatSel(), nStep(), iStepFrom(), iStepTo(), eCMsave(), eStepSize(), eStepSave(), eStepFrom(), eStepTo(), pT0Save(), pT4dSigmaMaxSave(), pT4dProbMaxSave(), sigmaIntSave(), sudExpPTSave(), zeroIntCorrSave(), normOverlapSave(), kNowSave(), bAvgSave(), bDivSave(), probLowBSave(), fracAhighSave(), fracBhighSave(), fracChighSave(), fracABChighSave(), cDivSave(), cMaxSave(), beamOffset(), mGmGmMin(), mGmGmMax(), hasGamma(), infoPtr(), rndmPtr(), beamAPtr(), beamBPtr(), couplingsPtr(), partonSystemsPtr(), sigmaTotPtr(), userHooksPtr(), partonVertexPtr(), sigma2Sel(), dSigmaDtSel() {}
 
   // Initialize the generation process for given beams.
   bool init( bool doMPIinit, int iDiffSysIn, Info* infoPtrIn,

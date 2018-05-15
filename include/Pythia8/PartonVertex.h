@@ -25,7 +25,7 @@ class PartonVertex {
 public:
 
   // Constructor.
-  PartonVertex() {}
+  PartonVertex() : infoPtr(), settingsPtr(), rndmPtr(), doVertex(), modeVertex(), rProton(), pTmin(), widthEmission(), bScale(), bNow(), xMax(), yMax(), mux() {}
 
   // Destructor.
   virtual ~PartonVertex() {}

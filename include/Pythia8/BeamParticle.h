@@ -121,7 +121,7 @@ class BeamParticle {
 public:
 
   // Constructor.
-  BeamParticle() : nInit(0) {resolved.resize(0); Q2ValFracSav = -1.;}
+  BeamParticle() : infoPtr(), particleDataPtr(), rndmPtr(), pdfBeamPtr(), pdfHardBeamPtr(), pdfUnresBeamPtr(), pdfBeamPtrSave(), pdfHardBeamPtrSave(), flavSelPtr(), allowJunction(), beamJunction(), maxValQuark(), companionPower(), valencePowerMeson(), valencePowerUinP(), valencePowerDinP(), valenceDiqEnhance(), pickQuarkNorm(), pickQuarkPower(), diffPrimKTwidth(), diffLargeMassSuppress(), beamSat(), gluonPower(), xGluonCutoff(), idBeam(), idBeamAbs(), mBeam(), isUnresolvedBeam(), isLeptonBeam(), isHadronBeam(), isMesonBeam(), isBaryonBeam(), isGammaBeam(), nValKinds(), idVal(), nVal(), idSave(), iSkipSave(), nValLeft(), xqgTot(), xqVal(), xqgSea(), xqCompSum(), doISR(), doMPI(), doND(), isResolvedGamma(), hasResGammaInBeam(), isResUnres(), pTminISR(), pTminMPI(), pT2gm2qqbar(), iGamVal(), iPosVal(), gammaMode(), xGm(), Q2gm(), kTgamma(), phiGamma(), nInit(0), hasJunctionBeam(), junCol(), nJuncs(), nAjuncs(), nDiffJuncs(), allowBeamJunctions(), uValInt(), dValInt(), idVal1(), idVal2(), idVal3(), zRel(), pxRel(), pyRel() {resolved.resize(0); Q2ValFracSav = -1.;}
 
   // Initialize data on a beam particle and save pointers.
   void init( int idIn, double pzIn, double eIn, double mIn,

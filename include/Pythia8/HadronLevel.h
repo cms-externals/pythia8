@@ -41,7 +41,7 @@ class HadronLevel {
 public:
 
   // Constructor.
-  HadronLevel() {}
+  HadronLevel() : doHadronize(), doDecay(), doBoseEinstein(), allowRH(), closePacking(), mStringMin(), eNormJunction(), widthSepBE(), doHadronScatter(), hsAfterDecay(), hadronScatMode(), infoPtr(), particleDataPtr(), rndmPtr(), userHooksPtr(), couplingsPtr(), doRopes(), doShoving(), doFlavour(), doVertex(), rHadronsPtr(), useHiddenValley() {}
 
   // Initialize HadronLevel classes as required.
   bool init(Info* infoPtrIn, Settings& settings,

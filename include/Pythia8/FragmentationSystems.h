@@ -61,7 +61,7 @@ class ColConfig {
 public:
 
   // Constructor.
-  ColConfig() {singlets.resize(0);}
+  ColConfig() : infoPtr(), flavSelPtr(), mJoin(), mJoinJunction(), mStringMin() {singlets.resize(0);}
 
   // Initialize and save pointers.
   void init(Info* infoPtrIn, Settings& settings, StringFlav* flavSelPtrIn);
@@ -169,7 +169,7 @@ class StringSystem {
 public:
 
   // Constructor.
-  StringSystem() {}
+  StringSystem() : sizePartons(), sizeStrings(), sizeRegions(), indxReg(), iMax(), mJoin(), m2Join() {}
 
   // Set up system from parton list.
   void setUp(vector<int>& iSys, Event& event);
