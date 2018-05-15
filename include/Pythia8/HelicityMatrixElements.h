@@ -131,6 +131,8 @@ class HMETwoFermions2W2TwoFermions : public HelicityMatrixElement {
 
 public:
 
+  HMETwoFermions2W2TwoFermions() {}
+
   void initConstants();
 
   void initWaves(vector<HelicityParticle>&);
@@ -152,6 +154,8 @@ private:
 class HMETwoFermions2GammaZ2TwoFermions : public HelicityMatrixElement {
 
 public:
+
+  HMETwoFermions2GammaZ2TwoFermions() {}
 
   void initConstants();
 
@@ -205,6 +209,8 @@ class HMEW2TwoFermions : public HMEX2TwoFermions {
 
 public:
 
+  HMEW2TwoFermions() {}
+
   void initConstants();
 
   complex calculateME(vector<int>);
@@ -235,6 +241,8 @@ public:
 class HMEZ2TwoFermions : public HMEX2TwoFermions {
 
 public:
+
+  HMEZ2TwoFermions() {}
 
   void initConstants();
 
@@ -358,6 +366,8 @@ class HMETau2TwoMesonsViaVectorScalar : public HMETauDecay {
 
 public:
 
+  HMETau2TwoMesonsViaVectorScalar() {}
+
   void initConstants();
 
   void initHadronicCurrent(vector<HelicityParticle>&);
@@ -380,6 +390,8 @@ private:
 class HMETau2ThreeMesons : public HMETauDecay {
 
 public:
+
+  HMETau2ThreeMesons() {}
 
   void initConstants();
 
@@ -429,6 +441,10 @@ protected:
 
 class HMETau2ThreePions : public HMETau2ThreeMesons {
 
+public:
+
+  HMETau2ThreePions() {}
+
 private:
 
   void initResonances();
@@ -457,6 +473,10 @@ private:
 
 class HMETau2ThreeMesonsWithKaons : public HMETau2ThreeMesons {
 
+public:
+
+  HMETau2ThreeMesonsWithKaons() {}
+
 private:
 
   void initResonances();
@@ -480,6 +500,10 @@ private:
 // Helicity matrix element for a tau decay into generic three mesons.
 
 class HMETau2ThreeMesonsGeneric : public HMETau2ThreeMesons {
+
+public:
+
+  HMETau2ThreeMesonsGeneric() {}
 
 private:
 
@@ -505,6 +529,8 @@ class HMETau2TwoPionsGamma : public HMETauDecay {
 
 public:
 
+  HMETau2TwoPionsGamma() {}
+
   void initConstants();
 
   void initWaves(vector<HelicityParticle>&);
@@ -529,6 +555,8 @@ protected:
 class HMETau2FourPions : public HMETauDecay {
 
 public:
+
+  HMETau2FourPions() {}
 
   void initConstants();
 
@@ -578,6 +606,8 @@ private:
 class HMETau2FivePions : public HMETauDecay {
 
 public:
+
+  HMETau2FivePions() {}
 
   void initConstants();
 
