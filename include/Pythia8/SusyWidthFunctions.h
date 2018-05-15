@@ -53,6 +53,9 @@ class StauWidths : public WidthFunction {
 
 public:
 
+  // Constructor.
+  StauWidths() {}
+
   // Destructor.
   ~StauWidths() { };
 

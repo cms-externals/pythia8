@@ -24,6 +24,9 @@ class StringLength {
 
 public:
 
+  // Constructor.
+  StringLength() {}
+
   // Initialize.
   void init(Info* infoPtrIn, Settings& settings);
 

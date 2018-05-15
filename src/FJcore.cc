@@ -798,6 +798,7 @@ private:
 };
 class ClosestPair2D::Point {
 public:
+  Point () {}
   Coord2D coord;
   Point * neighbour;
   double  neighbour_dist2;
@@ -838,6 +839,7 @@ class Tile {
 public:
   typedef double (Tile::*DistToTileFn)(const TiledJet*) const;
   typedef std::pair<Tile *, DistToTileFn> TileFnPair;
+  Tile() {}
   TileFnPair begin_tiles[n_tile_neighbours]; 
   TileFnPair *  surrounding_tiles; 
   TileFnPair *  RH_tiles;  

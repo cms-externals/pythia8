@@ -18,6 +18,9 @@ namespace Pythia8 {
 
 class SigmaPartialWave {
 public:
+  // Constructor
+  SigmaPartialWave() {}
+
   // Initialisation
   bool init(int, string, string, Info *, ParticleData *, Rndm *);
 
