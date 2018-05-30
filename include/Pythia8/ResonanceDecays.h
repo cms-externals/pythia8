@@ -29,7 +29,7 @@ class ResonanceDecays {
 public:
 
   // Constructor.
-  ResonanceDecays() {}
+  ResonanceDecays() : infoPtr(), particleDataPtr(), rndmPtr(), id0(), mult(), m0() {}
 
   // Store pointers to Info and Rndm for error messages and random numbers.
   void init(Info* infoPtrIn,  ParticleData* particleDataPtrIn,

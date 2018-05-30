@@ -49,7 +49,7 @@ class BoseEinstein {
 public:
 
   // Constructor.
-  BoseEinstein() {}
+  BoseEinstein() : doPion(), doKaon(), doEta(), lambda(), QRef(), infoPtr(), nStep(), nStep3(), nStored(), QRef2(), QRef3(), R2Ref(), R2Ref2(), R2Ref3(), mHadron(), mPair(), m2Pair(), deltaQ(), deltaQ3(), maxQ(), maxQ3(), shift(), shift3() {}
 
   // Find settings. Precalculate table used to find momentum shifts.
   bool init(Info* infoPtrIn, Settings& settings, ParticleData& particleData);

@@ -39,7 +39,7 @@ public:
     chgType(0), gamType(0), weakType(0), isrType(0), system(0), systemRec(0),
     MEtype(0), iMEpartner(-1), weakPol(0), isOctetOnium(false),
     isHiddenValley(false), colvType(0), MEmix(0.), MEorder(true),
-    MEsplit(true), MEgluinoRec(false), isFlexible(false) { }
+    MEsplit(true), MEgluinoRec(false), isFlexible(false), flavour(), iAunt(), mRad(), m2Rad(), mRec(), m2Rec(), mDip(), m2Dip(), m2DipCorr(), pT2(), m2(), z(), mFlavour(), asymPol(), flexFactor(), pAccept() { }
  TimeDipoleEnd(int iRadiatorIn, int iRecoilerIn, double pTmaxIn = 0.,
     int colIn = 0, int chgIn = 0, int gamIn = 0, int weakTypeIn = 0,
     int isrIn = 0, int systemIn = 0, int MEtypeIn = 0, int iMEpartnerIn = -1,
@@ -53,7 +53,7 @@ public:
     iMEpartner(iMEpartnerIn), weakPol(weakPolIn), isOctetOnium(isOctetOniumIn),
     isHiddenValley(isHiddenValleyIn), colvType(colvTypeIn), MEmix(MEmixIn),
     MEorder (MEorderIn), MEsplit(MEsplitIn), MEgluinoRec(MEgluinoRecIn),
-    isFlexible(isFlexibleIn)  { }
+    isFlexible(isFlexibleIn), flavour(), iAunt(), mRad(), m2Rad(), mRec(), m2Rec(), mDip(), m2Dip(), m2DipCorr(), pT2(), m2(), z(), mFlavour(), asymPol(), flexFactor(), pAccept()  { }
 
   // Basic properties related to dipole and matrix element corrections.
   int    iRadiator, iRecoiler;
@@ -81,7 +81,7 @@ class TimeShower {
 public:
 
   // Constructor.
-  TimeShower() {beamOffset = 0;}
+  TimeShower() : mergingHooksPtr(), infoPtr(), settingsPtr(), particleDataPtr(), rndmPtr(), coupSMPtr(), beamAPtr(), beamBPtr(), partonSystemsPtr(), userHooksPtr(), partonVertexPtr(), iSysSel(), pTmaxFudge(), pTLastBranch(), doQCDshower(), doQEDshowerByQ(), doQEDshowerByL(), doQEDshowerByOther(), doQEDshowerByGamma(), doWeakShower(), doMEcorrections(), doMEextended(), doMEafterFirst(), doPhiPolAsym(), doPhiPolAsymHard(), doInterleave(), allowBeamRecoil(), dampenBeamRecoil(), recoilToColoured(), useFixedFacScale(), allowRescatter(), canVetoEmission(), doHVshower(), brokenHVsym(), globalRecoil(), useLocalRecoilNow(), doSecondHard(), hasUserHooks(), singleWeakEmission(), alphaSuseCMW(), vetoWeakJets(), allowMPIdipole(), weakExternal(), recoilDeadCone(), doUncertainties(), uVarMuSoftCorr(), uVarMPIshowers(), doDipoleRecoil(), doPartonVertex(), noResVariations(), noProcVariations(), pTmaxMatch(), pTdampMatch(), alphaSorder(), alphaSnfmax(), nGluonToQuark(), weightGluonToQuark(), alphaEMorder(), nGammaToQuark(), nGammaToLepton(), nCHV(), idHV(), alphaHVorder(), nMaxGlobalRecoil(), weakMode(), pTdampFudge(), mc(), mb(), m2c(), m2b(), renormMultFac(), factorMultFac(), fixedFacScale2(), alphaSvalue(), alphaS2pi(), Lambda3flav(), Lambda4flav(), Lambda5flav(), Lambda3flav2(), Lambda4flav2(), Lambda5flav2(), scaleGluonToQuark(), extraGluonToQuark(), pTcolCutMin(), pTcolCut(), pT2colCut(), pTchgQCut(), pT2chgQCut(), pTchgLCut(), pT2chgLCut(), pTweakCut(), pT2weakCut(), mMaxGamma(), m2MaxGamma(), octetOniumFraction(), octetOniumColFac(), mZ(), gammaZ(), thetaWRat(), mW(), gammaW(), CFHV(), nFlavHV(), alphaHVfix(), LambdaHV(), pThvCut(), pT2hvCut(), mHV(), pTmaxFudgeMPI(), weakEnhancement(), vetoWeakDeltaR2(), dASmax(), cNSpTmin(), uVarpTmin2(), overFactor(), dopTlimit1(), dopTlimit2(), dopTdamp(), hasWeaklyRadiated(), pT2damp(), kRad(), kEmt(), pdfScale2(), doTrialNow(), canEnhanceEmission(), canEnhanceTrial(), canEnhanceET(), doUncertaintiesNow(), dipSel(), iDipSel(), nHard(), nFinalBorn(), nMaxGlobalBranch(), nGlobal(), globalRecoilMode(), limitMUQ(), weakHardSize(), nUncertaintyVariations(), nVarQCD(), uVarNflavQ() {beamOffset = 0;}
 
   // Destructor.
   virtual ~TimeShower() {}

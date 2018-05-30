@@ -169,7 +169,7 @@ FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 class EtaPhi {
 public:
   double first, second;
-  EtaPhi() {}
+  EtaPhi() : first(), second() {}
   EtaPhi(double a, double b) {first = a; second = b;}
   void sanitize() {    
     if (second <  0)     second += twopi; 
@@ -353,7 +353,7 @@ private:
 };
 template<class T> SearchTree<T>::SearchTree(const std::vector<T> & init,
 					    unsigned int max_size) :
-  _nodes(max_size) {
+  _nodes(max_size), _n_removes() {
   _available_nodes.reserve(max_size);
   _available_nodes.resize(max_size - init.size());
   for (unsigned int i = init.size(); i < max_size; i++) {
@@ -362,7 +362,7 @@ template<class T> SearchTree<T>::SearchTree(const std::vector<T> & init,
   _initialize(init);
 }
 template<class T> SearchTree<T>::SearchTree(const std::vector<T> & init) :
-  _nodes(init.size()), _available_nodes(0) {
+  _nodes(init.size()), _available_nodes(0), _n_removes() {
   _available_nodes.reserve(init.size());
   _initialize(init);
 }
@@ -729,12 +729,12 @@ FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 class ClosestPair2D : public ClosestPair2DBase {
 public:
   ClosestPair2D(const std::vector<Coord2D> & positions, 
-		const Coord2D & left_corner, const Coord2D & right_corner) {
+		const Coord2D & left_corner, const Coord2D & right_corner) : _range(), _shifts(), _rel_shifts(), _cp_search_range() {
     _initialize(positions, left_corner, right_corner, positions.size());
   };
   ClosestPair2D(const std::vector<Coord2D> & positions, 
 		const Coord2D & left_corner, const Coord2D & right_corner,
-		const unsigned int max_size) {
+		const unsigned int max_size) : _range(), _shifts(), _rel_shifts(), _cp_search_range() {
     _initialize(positions, left_corner, right_corner, max_size);
   };
   void closest_pair(unsigned int & ID1, unsigned int & ID2, 
@@ -798,6 +798,7 @@ private:
 };
 class ClosestPair2D::Point {
 public:
+  Point () : neighbour(), neighbour_dist2(), review_flag() {}
   Coord2D coord;
   Point * neighbour;
   double  neighbour_dist2;
@@ -838,6 +839,7 @@ class Tile {
 public:
   typedef double (Tile::*DistToTileFn)(const TiledJet*) const;
   typedef std::pair<Tile *, DistToTileFn> TileFnPair;
+  Tile() : surrounding_tiles(), RH_tiles(), end_tiles(), head(), tagged(), use_periodic_delta_phi(), max_NN_dist(), eta_min(), eta_max(), phi_min(), phi_max() {}
   TileFnPair begin_tiles[n_tile_neighbours]; 
   TileFnPair *  surrounding_tiles; 
   TileFnPair *  RH_tiles;  
@@ -1366,7 +1368,7 @@ void ClosestPair2D::_insert_into_search_tree(Point * new_point) {
   new_point->neighbour_dist2 = numeric_limits<double>::max();
   unsigned int CP_range = min(_cp_search_range, size()-1);
   for (unsigned ishift = 0; ishift < _nshift; ishift++) {
-    Shuffle new_shuffle;
+    Shuffle new_shuffle = {};
     _point2shuffle(*new_point, new_shuffle, _shifts[ishift]);
     circulator new_circ = _trees[ishift]->insert(new_shuffle);
     new_point->circ[ishift] = new_circ;
@@ -1594,7 +1596,7 @@ void ClusterSequence::_fill_initial_history () {
   _history.reserve(_jets.size()*2);
   _Qtot = 0;
   for (int i = 0; i < static_cast<int>(_jets.size()) ; i++) {
-    history_element element;
+    history_element element = {};
     element.parent1 = InexistentParent;
     element.parent2 = InexistentParent;
     element.child   = Invalid;
@@ -2132,7 +2134,7 @@ void ClusterSequence::_add_step_to_history (
                const int parent1, 
 	       const int parent2, const int jetp_index,
 	       const double dij) {
-  history_element element;
+  history_element element = {};
   element.parent1 = parent1;
   element.parent2 = parent2;
   element.jetp_index = jetp_index;
@@ -2861,7 +2863,7 @@ void ClusterSequence::_tiled_N2_cluster() {
   int n = _jets.size();
   TiledJet * briefjets = new TiledJet[n];
   TiledJet * jetA = briefjets, * jetB;
-  TiledJet oldB;
+  TiledJet oldB = {};
   oldB.tile_index=0; // prevents a gcc warning
   vector<int> tile_union(3*n_tile_neighbours);
   for (int i = 0; i< n; i++) {
@@ -3015,7 +3017,7 @@ void ClusterSequence::_faster_tiled_N2_cluster() {
   int n = _jets.size();
   TiledJet * briefjets = new TiledJet[n];
   TiledJet * jetA = briefjets, * jetB;
-  TiledJet oldB;
+  TiledJet oldB = {};
   oldB.tile_index=0; // prevents a gcc warning
   vector<int> tile_union(3*n_tile_neighbours);
   for (int i = 0; i< n; i++) {
@@ -3148,7 +3150,7 @@ void ClusterSequence::_minheap_faster_tiled_N2_cluster() {
   int n = _jets.size();
   TiledJet * briefjets = new TiledJet[n];
   TiledJet * jetA = briefjets, * jetB;
-  TiledJet oldB;
+  TiledJet oldB = {};
   oldB.tile_index=0; // prevents a gcc warning
   vector<int> tile_union(3*n_tile_neighbours);
   for (int i = 0; i< n; i++) {
@@ -3356,7 +3358,7 @@ JetDefinition::JetDefinition(JetAlgorithm jet_algorithm_in,
 			     RecombinationScheme recomb_scheme_in,
 			     Strategy strategy_in,
                              int nparameters) :
-  _jet_algorithm(jet_algorithm_in), _Rparam(R_in), _strategy(strategy_in) {
+  _jet_algorithm(jet_algorithm_in), _Rparam(R_in), _extra_param(), _strategy(strategy_in), _recombiner() {
   if (_jet_algorithm == ee_kt_algorithm) {
     _Rparam = 4.0; // introduce a fictional R that ensures that
   } else {
@@ -3740,7 +3742,7 @@ FJCORE_END_NAMESPACE
 #include <cstdarg>
 FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 using namespace std;
-PseudoJet::PseudoJet(const double px_in, const double py_in, const double pz_in, const double E_in) {
+PseudoJet::PseudoJet(const double px_in, const double py_in, const double pz_in, const double E_in) : _phi(), _rap(), _kt2(), _cluster_hist_index(), _user_index() {
   _E  = E_in ;
   _px = px_in;
   _py = py_in;
@@ -4944,7 +4946,7 @@ FJCORE_END_NAMESPACE      // defined in fastjet/internal/base.hh
 using namespace std;
 FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 LazyTiling25::LazyTiling25(ClusterSequence & cs) :
-  _cs(cs), _jets(cs.jets())
+  _cs(cs), _jets(cs.jets()), _tiles_eta_min(), _tiles_eta_max(), _tile_size_eta(), _tile_size_phi(), _tile_half_size_eta(), _tile_half_size_phi(), _n_tiles_phi(), _tiles_ieta_min(), _tiles_ieta_max()
 {
 #ifdef INSTRUMENT2
   _ncall = 0; // gps tmp
@@ -5353,7 +5355,7 @@ using namespace std;
 #define _FJCORE_TILING2_USE_TILING_ANALYSIS_
 FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 LazyTiling9::LazyTiling9(ClusterSequence & cs) :
-  _cs(cs), _jets(cs.jets())
+  _cs(cs), _jets(cs.jets()), _tiles_eta_min(), _tiles_eta_max(), _tile_size_eta(), _tile_size_phi(), _tile_half_size_eta(), _tile_half_size_phi(), _n_tiles_phi(), _tiles_ieta_min(), _tiles_ieta_max()
 {
 #ifdef INSTRUMENT2
   _ncall = 0; // gps tmp
@@ -5735,7 +5737,7 @@ FJCORE_END_NAMESPACE
 using namespace std;
 FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 LazyTiling9Alt::LazyTiling9Alt(ClusterSequence & cs) :
-  _cs(cs), _jets(cs.jets())
+  _cs(cs), _jets(cs.jets()), _tiles_eta_min(), _tiles_eta_max(), _tile_size_eta(), _tile_size_phi(), _tile_half_size_eta(), _tile_half_size_phi(), _n_tiles_phi(), _tiles_ieta_min(), _tiles_ieta_max()
 {
   _Rparam = cs.jet_def().R();
   _R2 = _Rparam * _Rparam;
@@ -5956,7 +5958,7 @@ void LazyTiling9Alt::run() {
   int n = _jets.size();
   TiledJet * briefjets = new TiledJet[n];
   TiledJet * jetA = briefjets, * jetB;
-  TiledJet oldB;
+  TiledJet oldB = {};
   vector<int> tile_union(3*n_tile_neighbours);
   for (int i = 0; i< n; i++) {
     _tj_set_jetinfo(jetA, i);
@@ -6108,10 +6110,10 @@ FJCORE_END_NAMESPACE
 #include <cmath>
 using namespace std;
 FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
-TilingExtent::TilingExtent(ClusterSequence & cs) {
+TilingExtent::TilingExtent(ClusterSequence & cs) : _minrap(), _maxrap(), _cumul2() {
   _determine_rapidity_extent(cs.jets());
 }
-TilingExtent::TilingExtent(const vector<PseudoJet> &particles) {
+TilingExtent::TilingExtent(const vector<PseudoJet> &particles) : _minrap(), _maxrap(), _cumul2() {
   _determine_rapidity_extent(particles);
 }
 void TilingExtent::_determine_rapidity_extent(const vector<PseudoJet> & particles) {

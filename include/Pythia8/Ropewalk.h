@@ -205,7 +205,7 @@ class Ropewalk {
 public:
 
   // Constructor.
-  Ropewalk() {}
+  Ropewalk() : r0(), m0(), pTcut(), doShoving(), shoveJunctionStrings(), shoveMiniStrings(), shoveGluonLoops(), mStringMin(), limitMom(), rCutOff(), gAmplitude(), gExponent(), deltay(), deltat(), tShove(), tInit(), showerCut(), infoPtr(), rndmPtr() {}
 
   // The Ropewalk init function sets parameters and pointers.
   bool init(Info* infoPtrIn, Settings& settings, Rndm* rndmPtrIn);
@@ -300,7 +300,7 @@ class RopeFragPars {
 public:
 
   // Constructor.
-  RopeFragPars() {}
+  RopeFragPars() : infoPtr(), aIn(), adiqIn(), bIn(), rhoIn(), xIn(), yIn(), xiIn(), sigmaIn(), aEff(), adiqEff(), bEff(), rhoEff(), xEff(), yEff(), xiEff(), sigmaEff(), beta() {}
 
   // The init function sets up initial parameters from settings.
   void init(Info* infoPtrIn, Settings& settings);
@@ -370,7 +370,7 @@ class FlavourRope {
 public:
 
   // Constructor.
-  FlavourRope() {}
+  FlavourRope() : settingsPtr(), rndmPtr(), particleDataPtr(), infoPtr(), rwPtr(), ePtr(), fixedKappa(), h() {}
 
   // Initialize. Set pointers.
   void init(Settings* settingsPtrIn, Rndm* rndmPtrIn, ParticleData*

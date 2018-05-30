@@ -46,9 +46,9 @@ class Rndm {
 public:
 
   // Constructors.
-  Rndm() : initRndm(false), seedSave(0), sequence(0),
+  Rndm() : initRndm(false), i97(), j97(), seedSave(0), sequence(0), u(), c(), cd(), cm(),
     useExternalRndm(false), rndmEngPtr(0) { }
-  Rndm(int seedIn) : initRndm(false), seedSave(0), sequence(0),
+  Rndm(int seedIn) : initRndm(false), i97(), j97(), seedSave(0), sequence(0), u(), c(), cd(), cm(),
     useExternalRndm(false), rndmEngPtr(0) { init(seedIn);}
 
   // Possibility to pass in pointer for external random number generation.
@@ -305,9 +305,9 @@ class RotBstMatrix {
 public:
 
   // Constructors.
-  RotBstMatrix() {for (int i = 0; i < 4; ++i) { for (int j = 0; j < 4; ++j)
+  RotBstMatrix() : M() {for (int i = 0; i < 4; ++i) { for (int j = 0; j < 4; ++j)
     { M[i][j] = (i==j) ? 1. : 0.; } } }
-  RotBstMatrix(const RotBstMatrix& Min) {
+  RotBstMatrix(const RotBstMatrix& Min) : M() {
     for (int i = 0; i < 4; ++i) { for (int j = 0; j < 4; ++j) {
     M[i][j] = Min.M[i][j]; } } }
   RotBstMatrix& operator=(const RotBstMatrix& Min) {if (this != &Min) {
@@ -366,9 +366,9 @@ class Hist {
 public:
 
   // Constructors, including copy constructors.
-  Hist() {;}
+  Hist() : nBin(), nFill(), xMin(), xMax(), dx(), under(), inside(), over() {;}
   Hist(string titleIn, int nBinIn = 100, double xMinIn = 0.,
-    double xMaxIn = 1.) {
+    double xMaxIn = 1.) : nBin(), nFill(), xMin(), xMax(), dx(), under(), inside(), over() {
     book(titleIn, nBinIn, xMinIn, xMaxIn);}
   Hist(const Hist& h)
     : titleSave(h.titleSave), nBin(h.nBin), nFill(h.nFill), xMin(h.xMin),

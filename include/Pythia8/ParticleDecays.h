@@ -55,7 +55,7 @@ class ParticleDecays {
 public:
 
   // Constructor.
-  ParticleDecays() {}
+  ParticleDecays() : infoPtr(), particleDataPtr(), rndmPtr(), couplingsPtr(), timesDecPtr(), flavSelPtr(), decayHandlePtr(), limitTau0(), limitTau(), limitRadius(), limitCylinder(), limitDecay(), mixB(), doFSRinDecays(), doGammaRad(), tauMode(), mSafety(), tau0Max(), tauMax(), rMax(), xyMax(), zMax(), xBdMix(), xBsMix(), sigmaSoft(), multIncrease(), multIncreaseWeak(), multRefMass(), multGoffset(), colRearrange(), stopMass(), sRhoDal(), wRhoDal(), hasPartons(), keepPartons(), idDec(), meMode(), mult(), scale(), decDataPtr() {}
 
   // Initialize: store pointers and find settings
   void init(Info* infoPtrIn, Settings& settings,

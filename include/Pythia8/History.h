@@ -59,7 +59,7 @@ public:
   int recBef;
 
   // Default constructor
-  Clustering(){
+  Clustering() : pTscale(){
     emitted    = 0;
     emittor    = 0;
     recoiler   = 0;
@@ -901,10 +901,10 @@ private:
   MergingHooks* mergingHooksPtr;
 
    // The default constructor is private.
-  History() {}
+  History() : mother(), selectedChild(), sumpath(), sumGoodBranches(), sumBadBranches(), foundOrderedPath(), foundStronglyOrderedPath(), foundAllowedPath(), foundCompletePath(), scale(), nextInInput(), prob(), iReclusteredOld(), iReclusteredNew(), doInclude(), mergingHooksPtr(), particleDataPtr(), infoPtr(), showers(), coupSMPtr(), sumScalarPT() {}
 
   // The copy-constructor is private.
-  History(const History &) {}
+  History(const History &) : mother(), selectedChild(), sumpath(), sumGoodBranches(), sumBadBranches(), foundOrderedPath(), foundStronglyOrderedPath(), foundAllowedPath(), foundCompletePath(), scale(), nextInInput(), prob(), iReclusteredOld(), iReclusteredNew(), doInclude(), mergingHooksPtr(), particleDataPtr(), infoPtr(), showers(), coupSMPtr(), sumScalarPT() {}
 
   // The assignment operator is private.
   History & operator=(const History &) {

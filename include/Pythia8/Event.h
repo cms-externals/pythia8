@@ -325,16 +325,16 @@ class Junction {
 public:
 
   // Constructors.
-  Junction() : remainsSave(true), kindSave(0) {
+  Junction() : remainsSave(true), kindSave(0), colSave(), endColSave(), statusSave() {
     for (int j = 0; j < 3; ++j) {
     colSave[j] = 0; endColSave[j] = 0; statusSave[j] = 0; } }
   Junction( int kindIn, int col0In, int col1In, int col2In)
-    : remainsSave(true), kindSave(kindIn) {colSave[0] = col0In;
+    : remainsSave(true), kindSave(kindIn), colSave(), endColSave(), statusSave() {colSave[0] = col0In;
     colSave[1] = col1In; colSave[2] = col2In;
     for (int j = 0; j < 3; ++j) {
     endColSave[j] = colSave[j]; statusSave[j] = 0; } }
   Junction(const Junction& ju) : remainsSave(ju.remainsSave),
-    kindSave(ju.kindSave) { for (int j = 0; j < 3; ++j) {
+    kindSave(ju.kindSave), colSave(), endColSave(), statusSave() { for (int j = 0; j < 3; ++j) {
     colSave[j] = ju.colSave[j]; endColSave[j] = ju.endColSave[j];
     statusSave[j] = ju.statusSave[j]; } }
   Junction& operator=(const Junction& ju) {if (this != &ju) {
@@ -381,7 +381,7 @@ public:
     headerList("----------------------------------------"),
     particleDataPtr(0) { entry.reserve(capacity); }
   Event& operator=(const Event& oldEvent);
-  Event(const Event& oldEvent) {*this = oldEvent;}
+  Event(const Event& oldEvent) : startColTag(), maxColTag(), savedSize(), savedJunctionSize(), savedPartonLevelSize(), scaleSave(), scaleSecondSave(), particleDataPtr() {*this = oldEvent;}
 
   // Initialize header for event listing, particle data table, and colour.
   void init( string headerIn = "", ParticleData* particleDataPtrIn = 0,

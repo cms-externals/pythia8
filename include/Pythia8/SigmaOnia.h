@@ -22,7 +22,7 @@ class SigmaOniaSetup {
 public:
 
   // Constructors.
-  SigmaOniaSetup() {};
+  SigmaOniaSetup() : infoPtr(), settingsPtr(), particleDataPtr(), onia(), onia3S1(), onia3PJ(), onia3DJ(), oniaFlavour(), valid3S1(), valid3PJ(), valid3DJ(), validDbl3S1(), flavour(), mSplit() {};
   SigmaOniaSetup(Info* infoPtrIn, Settings* settingsPtrIn,
     ParticleData* particleDataPtrIn, int flavourIn);
 
@@ -79,7 +79,7 @@ public:
 
   // Constructor.
   Sigma2gg2QQbar3S11g(int idHadIn, double oniumMEIn, int codeIn) :
-    idHad(abs(idHadIn)), codeSave(codeIn), oniumME(oniumMEIn) {}
+    idHad(abs(idHadIn)), codeSave(codeIn), oniumME(oniumMEIn), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -118,7 +118,7 @@ public:
 
   // Constructor.
   Sigma2gg2QQbar3S11gm(int idHadIn, double oniumMEIn, int codeIn) :
-    idHad(abs(idHadIn)), codeSave(codeIn), oniumME(oniumMEIn) {}
+    idHad(abs(idHadIn)), codeSave(codeIn), qEM2(), oniumME(oniumMEIn), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -157,7 +157,7 @@ public:
 
   // Constructor.
   Sigma2gg2QQbar3PJ1g(int idHadIn, double oniumMEIn, int jIn, int codeIn) :
-    idHad(idHadIn), jSave(jIn), codeSave(codeIn), oniumME(oniumMEIn) {}
+    idHad(idHadIn), jSave(jIn), codeSave(codeIn), oniumME(oniumMEIn), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -281,7 +281,7 @@ public:
   // Constructor.
   Sigma2gg2QQbarX8g(int idHadIn, double oniumMEIn, int stateIn,
     double mSplitIn, int codeIn) : idHad(idHadIn), stateSave(stateIn),
-    codeSave(codeIn), oniumME(oniumMEIn), mSplit(mSplitIn) {}
+    codeSave(codeIn), oniumME(oniumMEIn), sigma(), mSplit(mSplitIn) {}
 
   // Initialize process.
   virtual void initProc();
@@ -387,7 +387,7 @@ public:
   Sigma2gg2QQbar3S11QQbar3S11(int idHad1In, int idHad2In,
     double oniumME1In, double oniumME2In, int codeIn) :
     idHad1(abs(idHad1In)), idHad2(abs(idHad2In)), codeSave(codeIn),
-    oniumME1(oniumME1In), oniumME2(oniumME2In) {}
+    oniumME1(oniumME1In), oniumME2(oniumME2In), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -429,8 +429,8 @@ public:
   // Constructor.
   Sigma2qqbar2QQbar3S11QQbar3S11(int idHad1In, int idHad2In,
     double oniumME1In, double oniumME2In, int codeIn) :
-    idHad1(abs(idHad1In)), idHad2(abs(idHad2In)), codeSave(codeIn),
-    oniumME1(oniumME1In), oniumME2(oniumME2In) {}
+    idHad1(abs(idHad1In)), idHad2(abs(idHad2In)), codeSave(codeIn), m2(),
+    oniumME1(oniumME1In), oniumME2(oniumME2In), sigma() {}
 
   // Initialize process.
   virtual void initProc();

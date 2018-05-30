@@ -22,7 +22,7 @@ class WidthFunction {
 public:
 
   // Constructor and destructor.
-  WidthFunction() { };
+  WidthFunction() : particleDataPtr(), coupSUSYPtr(), infoPtr(), idRes(), idInt(), id1(), id2(), id3(), id4(), mRes(), mInt(), gammaInt(), m1(), m2(), m3(), m4() { };
   virtual ~WidthFunction() { };
 
   // Public methods.
@@ -52,6 +52,9 @@ protected:
 class StauWidths : public WidthFunction {
 
 public:
+
+  // Constructor.
+  StauWidths() : fnSwitch(), delm(), f0(), gf(), cons(), wparam() {}
 
   // Destructor.
   ~StauWidths() { };

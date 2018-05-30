@@ -24,7 +24,7 @@ class ResonanceS : public ResonanceWidths {
 public:
 
   // Constructor.
-  ResonanceS(int idResIn) {initBasic(idResIn);}
+  ResonanceS(int idResIn) : gq(), gX(), preFac(), alpS(), pScalar() {initBasic(idResIn);}
 
 private:
 
@@ -55,7 +55,7 @@ class ResonanceZp : public ResonanceWidths {
 public:
 
   // Constructor.
-  ResonanceZp(int idResIn) {initBasic(idResIn);}
+  ResonanceZp(int idResIn) : vu(), vd(), vl(), vv(), vX(), au(), ad(), al(), av(), aX(), preFac(), gZp() {initBasic(idResIn);}
 
 private:
 

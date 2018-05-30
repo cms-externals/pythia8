@@ -23,7 +23,7 @@ class Sigma2ffbar2Zp2XX : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2ffbar2Zp2XX() {}
+  Sigma2ffbar2Zp2XX() : mRes(), GammaRes(), m2Res(), sigma0(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();
@@ -61,7 +61,7 @@ class Sigma3ffbar2Zp2XXj : public Sigma3Process {
 public:
 
   // Constructor.
-  Sigma3ffbar2Zp2XXj() {}
+  Sigma3ffbar2Zp2XXj() : mRes(), GammaRes(), m2Res(), preFac(), sigma0(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();
@@ -113,7 +113,7 @@ class Sigma2gg2S2XX : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2gg2S2XX() {}
+  Sigma2gg2S2XX() : mRes(), GammaRes(), m2Res(), sigma0(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();
@@ -151,7 +151,7 @@ class Sigma3gg2S2XXj : public Sigma3Process {
 public:
 
   // Constructor.
-  Sigma3gg2S2XXj() {}
+  Sigma3gg2S2XXj() : mRes(), GammaRes(), m2Res(), propS(), sigma0(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();

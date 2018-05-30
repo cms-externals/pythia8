@@ -37,7 +37,7 @@ class ProcessLevel {
 public:
 
   // Constructor.
-  ProcessLevel() : iLHACont(-1) {}
+  ProcessLevel() : doSecondHard(), doSameCuts(), allHardSame(), noneHardSame(), someHardSame(), cutsAgree(), cutsOverlap(), doResDecays(), doISR(), doMPI(), startColTag(), mHatMin1(), mHatMax1(), pTHatMin1(), pTHatMax1(), mHatMin2(), mHatMax2(), pTHatMin2(), pTHatMax2(), sigmaND(), beamHasGamma(), gammaMode(), iContainer(), iLHACont(-1), sigmaMaxSum(), i2Container(), sigma2MaxSum(), infoPtr(), particleDataPtr(), rndmPtr(), beamAPtr(), beamBPtr(), beamGamAPtr(), beamGamBPtr(), couplingsPtr(), sigmaTotPtr(), slhaInterfacePtr(), userHooksPtr(), lhaUpPtr() {}
 
   // Destructor to delete processes in containers.
   ~ProcessLevel();

@@ -30,7 +30,7 @@ class RHadrons {
 public:
 
   // Constructor.
-  RHadrons() : nRHad(0) {}
+  RHadrons() : allowRH(), allowRSb(), allowRSt(), allowRGo(), allowSomeR(), setMassesRH(), idRSb(), idRSt(), idRGo(), maxWidthRH(), probGluinoballRH(), mOffsetCloudRH(), mCollapseRH(), diquarkSpin1RH(), m0Sb(), m0St(), m0Go(), nRHad(0), iRHad(), iBef(), iSys(), systemPtr(), infoPtr(), particleDataPtr(), rndmPtr(), flavSelPtr(), zSelPtr() {}
 
   // Initialization of R-hadron handling.
   bool init( Info* infoPtrIn, Settings& settings,

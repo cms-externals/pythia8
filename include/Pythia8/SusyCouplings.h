@@ -30,7 +30,7 @@ public:
 
   // Constructor
   CoupSUSY() : Couplings(true), isInit(false), isNMSSM(false),
-    isLLE(false), isLQD(false), isUDD(false) {}
+    isLLE(false), isLQD(false), isUDD(false), mWpole(), wWpole(), mZpole(), wZpole(), mW(), mZ(), sin2W(), sinW(), cosW(), tanb(), cosb(), sinb(), muHiggs(), alphaHiggs(), mAHiggs(), LqqZ(), RqqZ(), LllZ(), RllZ(), rvLLE(), rvLQD(), rvUDD(), slhaPtr(), infoPtr(), settingsPtr(), particleDataPtr() {}
 
   // Initialize
   void initSUSY(SusyLesHouches* slhaPtrIn, Info* infoPtrIn,
