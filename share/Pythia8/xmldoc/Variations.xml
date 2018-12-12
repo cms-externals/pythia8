@@ -70,6 +70,52 @@ enter in the reweightings.
 </flag> 
  
 <p/> 
+The following parameters allow one to switch off all 
+variations below a fixed threshold.  It is specified in terms of 
+a multiplier for the <code>TimeShower:pTmin</code> squared (FSR) or 
+<code>SpaceShower:pT0Ref</code> squared (ISR). 
+A separate cutoff can be specified for ISR or FSR: 
+<parm name="UncertaintyBands:ISRpTmin2Fac" default="4.0" min="0.0" 
+max="100.0"> 
+Variations will not be performed for ISR branchings 
+occurring below the threshold fixed by 
+<code>UncertaintyBands:ISRpTmin2Fac</code> times 
+<code> SpaceShower:pT0Ref^2 </code>. 
+</parm> 
+<parm name="UncertaintyBands:FSRpTmin2Fac" default="4.0" min="0.0" 
+max="100.0"> 
+Variations will not be performed for FSR branchings 
+occurring below the threshold fixed by 
+<code>UncertaintyBands:FSRpTmin2Fac</code> times 
+<code> TimeShower:pTmin^2 </code>. 
+</parm> 
+ 
+<p/> 
+To ensure coverage of the phase space for the variations, the overestimate 
+of the Sudakov used in the veto algorithm is artifically increased, which 
+is compensated in the rejection factor. A larger factor reduces fluctuations 
+at the cost of a longer generation time. The default parameters chosen are 
+a compromise between time and fluctuations. 
+<parm name="UncertaintyBands:overSampleFSR" default="3.0" min="1.0" 
+max="10.0"> 
+The QCD FSR Sudakov is artificially increased by this factor. The increase 
+is compensated for in the veto algorithm. 
+</parm> 
+<parm name="UncertaintyBands:overSampleISR" default="2.0" min="1.0" 
+max="10.0"> 
+The similar parameter for the QCD ISR Sudakov. 
+</parm> 
+ 
+<p/> 
+The user can control whether the variations are calculated in all or 
+specific stages of the event generation: 
+<modepick name="UncertaintyBands:type" default="0" min="0" max="2"> 
+<option value="0">  Variations are calculated where allowed; </option> 
+<option value="1">   only for the process (including ISR and FSR); </option> 
+<option value="2">   only for resonance decay and showering; </option> 
+</modepick> 
+ 
+<p/> 
 <b>UserHooks Warning:</b> the calculation of uncertainty variations 
 will only be consistent in the absence of any external modifications 
 to the shower branching probabilities via the 

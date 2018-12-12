@@ -11,6 +11,18 @@ but this should only affect a small part of the user code.
 <h3>Main news by version</h3> 
  
 <ul> 
+
+<li>Backported from 8.230: 6 October 2017 
+<ul> 
+ 
+<li>The machinery for 
+<aloc href="Variations">Automated Shower Variations</aloc> 
+has been extended to stop variation uncertainty evaluation 
+below some scale, so as to better correlate the event weighting 
+with the harder part of the event evolution.</li> 
+ 
+</ul> 
+</li> 
  
 <li>8.226: 26 April 2017 
 <ul> 

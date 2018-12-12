@@ -145,8 +145,8 @@ public:
   bool initUncertainties();
 
   // Calculate uncertainty-band weights for accepted/rejected trial branching.
-  void calcUncertainties(bool accept, double pAccept,
-    TimeDipoleEnd* dip, Particle* radPtr, Particle* emtPtr);
+  void calcUncertainties(bool accept, double pAccept, double enhance,
+    double vp, TimeDipoleEnd* dip, Particle* radPtr, Particle* emtPtr);
 
   // Tell which system was the last processed one.
   virtual int system() const {return iSysSel;};
@@ -257,7 +257,8 @@ private:
          globalRecoil, useLocalRecoilNow, doSecondHard, hasUserHooks,
          singleWeakEmission, alphaSuseCMW, vetoWeakJets, allowMPIdipole,
          weakExternal, recoilDeadCone, doUncertainties, uVarMuSoftCorr,
-         uVarMPIshowers;
+         uVarMPIshowers, doDipoleRecoil, doPartonVertex, noResVariations,
+         noProcVariations;
   int    pTmaxMatch, pTdampMatch, alphaSorder, alphaSnfmax, nGluonToQuark,
          weightGluonToQuark, alphaEMorder, nGammaToQuark, nGammaToLepton,
          nCHV, idHV, alphaHVorder, nMaxGlobalRecoil, weakMode;
@@ -269,7 +270,8 @@ private:
          pTweakCut, pT2weakCut, mMaxGamma, m2MaxGamma, octetOniumFraction,
          octetOniumColFac, mZ, gammaZ, thetaWRat, mW, gammaW, CFHV, nFlavHV,
          alphaHVfix, LambdaHV, pThvCut, pT2hvCut, mHV, pTmaxFudgeMPI,
-         weakEnhancement, vetoWeakDeltaR2, dASmax, cNSpTmin;
+         weakEnhancement, vetoWeakDeltaR2, dASmax, cNSpTmin, uVarpTmin2,
+         overFactor;
 
   // alphaStrong and alphaEM calculations.
   AlphaStrong alphaS;
