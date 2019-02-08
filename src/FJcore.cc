@@ -836,6 +836,7 @@ public:
 const int n_tile_neighbours = 9;
 class Tile {
 public:
+  Tile() {}
   typedef double (Tile::*DistToTileFn)(const TiledJet*) const;
   typedef std::pair<Tile *, DistToTileFn> TileFnPair;
   TileFnPair begin_tiles[n_tile_neighbours]; 
