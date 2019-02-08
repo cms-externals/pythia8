@@ -1012,7 +1012,7 @@ public:
     PDF* gammaPDFPtrIn, Settings* settingsPtrIn, Info* infoPtrIn,
     Rndm* rndmPtrIn ) : PDF(idBeamIn), m2(m2In), Q2max(), Q2min(), xMax(),
     xMin(), xHadr(), norm(), xPow(), xCut(), norm1(), norm2(),
-    integral1(), integral2(), bmhbarc(), gammaFluxPtr(gammaFluxPtrIn),
+    integral1(), integral2(), bmhbarc(), approxMode(), gammaFluxPtr(gammaFluxPtrIn),
     gammaPDFPtr(gammaPDFPtrIn), rndmPtr(rndmPtrIn), infoPtr(infoPtrIn),
     settingsPtr(settingsPtrIn) { hasGammaInLepton = true; init(); }
 

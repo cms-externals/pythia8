@@ -34,7 +34,7 @@ public:
 
   // Constructor.
   TimeShower() : mergingHooksPtr(), infoPtr(), settingsPtr(),
-    particleDataPtr(), rndmPtr(), coupSMPtr(), beamAPtr(), beamBPtr(),
+    particleDataPtr(), rndmPtr(), coupSMPtr(), beamAPtr(), beamBPtr(), beamOffset(),
     partonSystemsPtr(), userHooksPtr(), partonVertexPtr(),
     doUncertainties(), uVarMuSoftCorr(), uVarMPIshowers(), noResVariations(),
     noProcVariations(), nUncertaintyVariations(), nVarQCD(), uVarNflavQ(),
