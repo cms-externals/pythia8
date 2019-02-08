@@ -888,7 +888,7 @@ private:
     sumBadBranches(), foundOrderedPath(), foundStronglyOrderedPath(),
     foundAllowedPath(), foundCompletePath(), scale(), nextInInput(), prob(),
     iReclusteredOld(), iReclusteredNew(), doInclude(), mergingHooksPtr(),
-    particleDataPtr(), infoPtr(), showers(), coupSMPtr(), sumScalarPT() {}
+    particleDataPtr(), infoPtr(), showers(), coupSMPtr(), sumScalarPT(), probMaxSave(), depth(), minDepthSave() {}
 
   // The copy-constructor is private.
   History(const History &) {}

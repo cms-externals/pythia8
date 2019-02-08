@@ -49,7 +49,7 @@ public:
       setQuarkMass(), setLeptonMass(), idNewM(), mRecalculate(), mNewM(),
       isLHA(), isNonDiff(), isResolved(), isDiffA(), isDiffB(), isDiffC(),
       isQCD3body(), allowNegSig(), isSameSave(), increaseMaximum(),
-      canVetoResDecay(), lhaStrat(), lhaStratAbs(), useStrictLHEFscales(),
+      canVetoResDecay(), lhaStrat(), lhaStratAbs(), processCode(), useStrictLHEFscales(),
       newSigmaMx(), nTry(), nSel(), nAcc(), nTryStat(), sigmaMx(), sigmaSgn(),
       sigmaSum(), sigma2Sum(), sigmaNeg(), sigmaAvg(), sigmaFin(), deltaFin(),
       weightNow(), wtAccSum(), beamAhasResGamma(), beamBhasResGamma(),

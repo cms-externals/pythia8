@@ -33,7 +33,7 @@ class SpaceShower {
 public:
   // Constructor.
   SpaceShower() : mergingHooksPtr(), infoPtr(), settingsPtr(),
-    particleDataPtr(), rndmPtr(), coupSMPtr(), beamAPtr(), beamBPtr(),
+    particleDataPtr(), rndmPtr(), coupSMPtr(), beamAPtr(), beamBPtr(), beamOffset(),
     partonSystemsPtr(), userHooksPtr(), partonVertexPtr(),
     doUncertainties(), uVarMuSoftCorr(), uVarMPIshowers(),
     nUncertaintyVariations(), nVarQCD(), uVarNflavQ(),  dASmax(), cNSpTmin(),

@@ -24,7 +24,7 @@ class PartonSystem {
 public:
 
   // Constructors.
-  PartonSystem() : hard(false), iInA(0), iInB(0), iInRes(0), sHat(0.) {
+  PartonSystem() : hard(false), iInA(0), iInB(0), iInRes(0), sHat(0.), pTHat() {
     iOut.reserve(10);}
 
   // Stored quantities.
