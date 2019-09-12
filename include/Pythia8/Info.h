@@ -58,7 +58,7 @@ public:
     scaleVMDASave(), scaleVMDBSave(), counters(), weightCKKWLSave(1.),
     weightFIRSTSave(0.) {
     for (int i = 0; i < 40; ++i) counters[i] = 0;
-    setNWeights(1);}
+    }
 
   // Destructor for clean-up.
  ~Info(){

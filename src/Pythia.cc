@@ -852,6 +852,7 @@ bool Pythia::init() {
   // Find which frame type to use.
   info.addCounter(1);
   frameType = mode("Beams:frameType");
+  info.setNWeights(1);
 
   // Set up values related to CKKW-L merging.
   bool doUserMerging     = settings.flag("Merging:doUserMerging");
