@@ -23,7 +23,7 @@ class Sigma2ffbar2Zp2XX : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2ffbar2Zp2XX() {}
+  Sigma2ffbar2Zp2XX() : mRes(), GammaRes(), m2Res(), preFac(), sigma0(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();

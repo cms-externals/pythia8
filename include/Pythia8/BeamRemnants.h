@@ -35,7 +35,7 @@ class BeamRemnants {
 public:
 
   // Constructor.
-  BeamRemnants() : iDS(0) { }
+  BeamRemnants() : doPrimordialKT(), allowRescatter(), doRescatterRestoreY(), doReconnect(), primordialKTsoft(), primordialKThard(), primordialKTremnant(), halfScaleForKT(), halfMassForKT(), reducedKTatHighY(), remnantMode(), reconnectMode(), isDIS(), doMPI(), nSys(), oldSize(), iDS(0), eCM(), sCM(), infoPtr(), rndmPtr(), beamAPtr(), beamBPtr(), colourReconnectionPtr(), partonSystemsPtr(), particleDataPtr() { }
 
   // Initialization.
   bool init( Info* infoPtrIn, Settings& settings, Rndm* rndmPtrIn,

@@ -197,7 +197,7 @@ class Settings {
 public:
 
   // Constructor.
-  Settings() : isInit(false), readingFailedSave(false), lineSaved(false) {}
+  Settings() : infoPtr(), isInit(false), readingFailedSave(false), lineSaved(false) {}
 
   // Initialize Info pointer.
   void initPtr(Info* infoPtrIn) {infoPtr = infoPtrIn;}

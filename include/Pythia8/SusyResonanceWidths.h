@@ -23,7 +23,7 @@ class SUSYResonanceWidths : public ResonanceWidths{
 
 public:
 
-  SUSYResonanceWidths() {}
+  SUSYResonanceWidths() : coupSUSYPtr() {}
 
 protected:
 
@@ -49,7 +49,7 @@ class ResonanceSquark : public SUSYResonanceWidths {
 public:
 
   // Constructor.
-  ResonanceSquark(int idResIn) {initBasic(idResIn);}
+  ResonanceSquark(int idResIn) : s2W() {initBasic(idResIn);}
 
 
 private:
@@ -108,7 +108,7 @@ class ResonanceNeut : public SUSYResonanceWidths {
 public:
 
   // Constructor.
-  ResonanceNeut(int idResIn) {initBasic(idResIn);}
+  ResonanceNeut(int idResIn) : kinFac2(), s2W() {initBasic(idResIn);}
 
 private:
 
@@ -143,7 +143,7 @@ class ResonanceChar : public SUSYResonanceWidths {
 public:
 
   // Constructor.
-  ResonanceChar(int idResIn) {initBasic(idResIn);}
+  ResonanceChar(int idResIn) : kinFac2(), s2W() {initBasic(idResIn);}
 
 private:
 
@@ -179,7 +179,7 @@ class ResonanceSlepton : public SUSYResonanceWidths {
 public:
 
   // Constructor.
-  ResonanceSlepton(int idResIn) {initBasic(idResIn);}
+  ResonanceSlepton(int idResIn) : s2W() {initBasic(idResIn);}
 
 private:
 

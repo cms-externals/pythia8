@@ -43,7 +43,7 @@ public:
   ProcessContainer(SigmaProcess* sigmaProcessPtrIn = 0,
     bool externalPtrIn = false, PhaseSpace* phaseSpacePtrIn = 0) :
       sigmaProcessPtr(sigmaProcessPtrIn),
-      externalPtr(externalPtrIn), phaseSpacePtr(phaseSpacePtrIn) {}
+      externalPtr(externalPtrIn), phaseSpacePtr(phaseSpacePtrIn), infoPtr(), particleDataPtr(), rndmPtr(), resDecaysPtr(), userHooksPtr(), lhaUpPtr(), beamAPtr(), beamBPtr(), gammaKinPtr(), matchInOut(), idRenameBeams(), setLifetime(), setQuarkMass(), setLeptonMass(), idNewM(), mRecalculate(), mNewM(), isLHA(), isNonDiff(), isResolved(), isDiffA(), isDiffB(), isDiffC(), isQCD3body(), allowNegSig(), isSameSave(), increaseMaximum(), canVetoResDecay(), lhaStrat(), lhaStratAbs(), useStrictLHEFscales(), newSigmaMx(), nTry(), nSel(), nAcc(), nTryStat(), sigmaMx(), sigmaSgn(), sigmaSum(), sigma2Sum(), sigmaNeg(), sigmaAvg(), sigmaFin(), deltaFin(), weightNow(), wtAccSum(), beamAhasResGamma(), beamBhasResGamma(), beamHasResGamma(), beamHasGamma(), beamAgammaMode(), beamBgammaMode(), gammaModeEvent(), nTryRequested(), nSelRequested(), nAccRequested(), sigmaTemp(), sigma2Temp() {}
 
   // Destructor. Do not destroy external sigmaProcessPtr.
   ~ProcessContainer() {delete phaseSpacePtr;
@@ -224,7 +224,7 @@ class SetupContainers {
 public:
 
   // Constructor.
-  SetupContainers() {}
+  SetupContainers() : nVecA(), nVecB() {}
 
   // Initialization assuming all necessary data already read.
   bool init(vector<ProcessContainer*>& containerPtrs, Info* infoPtr,

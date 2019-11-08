@@ -26,7 +26,7 @@ class HelicityMatrixElement {
 public:
 
   // Constructor and destructor.
-  HelicityMatrixElement() {};
+  HelicityMatrixElement() : DECAYWEIGHTMAX(), particleDataPtr(), couplingsPtr(), settingsPtr() {};
   virtual ~HelicityMatrixElement() {};
 
   // Initialize the physics matrices and pointers.
@@ -131,7 +131,7 @@ class HMETwoFermions2W2TwoFermions : public HelicityMatrixElement {
 
 public:
 
-  HMETwoFermions2W2TwoFermions() {}
+  HMETwoFermions2W2TwoFermions() : p0CA(), p2CA(), p0CV(), p2CV() {}
 
   void initConstants();
 
@@ -155,7 +155,7 @@ class HMETwoFermions2GammaZ2TwoFermions : public HelicityMatrixElement {
 
 public:
 
-  HMETwoFermions2GammaZ2TwoFermions() {}
+  HMETwoFermions2GammaZ2TwoFermions() : p0CAZ(), p2CAZ(), p0CVZ(), p2CVZ(), p0CAZp(), p2CAZp(), p0CVZp(), p2CVZp(), cos2W(), sin2W(), zG(), zM(), zpG(), zpM(), s(), p0Q(), p2Q(), zaxis(), includeGamma(), includeZ(), includeZp() {}
 
   void initConstants();
 
@@ -209,7 +209,7 @@ class HMEW2TwoFermions : public HMEX2TwoFermions {
 
 public:
 
-  HMEW2TwoFermions() {}
+  HMEW2TwoFermions() : p2CA(), p2CV() {}
 
   void initConstants();
 
@@ -242,7 +242,7 @@ class HMEZ2TwoFermions : public HMEX2TwoFermions {
 
 public:
 
-  HMEZ2TwoFermions() {}
+  HMEZ2TwoFermions() : p2CA(), p2CV() {}
 
   void initConstants();
 
@@ -366,7 +366,7 @@ class HMETau2TwoMesonsViaVectorScalar : public HMETauDecay {
 
 public:
 
-  HMETau2TwoMesonsViaVectorScalar() {}
+  HMETau2TwoMesonsViaVectorScalar() : scaC(), vecC() {}
 
   void initConstants();
 
@@ -391,7 +391,7 @@ class HMETau2ThreeMesons : public HMETauDecay {
 
 public:
 
-  HMETau2ThreeMesons() {}
+  HMETau2ThreeMesons() : s1(), s2(), s3(), s4() {}
 
   void initConstants();
 
@@ -443,7 +443,7 @@ class HMETau2ThreePions : public HMETau2ThreeMesons {
 
 public:
 
-  HMETau2ThreePions() {}
+  HMETau2ThreePions() : f0M(), f0G(), f0P(), f0A(), f2M(), f2G(), f2P(), f2A(), sigM(), sigG(), sigP(), sigA() {}
 
 private:
 
@@ -475,7 +475,7 @@ class HMETau2ThreeMesonsWithKaons : public HMETau2ThreeMesons {
 
 public:
 
-  HMETau2ThreeMesonsWithKaons() {}
+  HMETau2ThreeMesonsWithKaons() : kM(), piM(), piW() {}
 
 private:
 
@@ -503,7 +503,7 @@ class HMETau2ThreeMesonsGeneric : public HMETau2ThreeMesons {
 
 public:
 
-  HMETau2ThreeMesonsGeneric() {}
+  HMETau2ThreeMesonsGeneric() : kM(), piM(), piW() {}
 
 private:
 
@@ -529,7 +529,7 @@ class HMETau2TwoPionsGamma : public HMETauDecay {
 
 public:
 
-  HMETau2TwoPionsGamma() {}
+  HMETau2TwoPionsGamma() : piM() {}
 
   void initConstants();
 
@@ -556,7 +556,7 @@ class HMETau2FourPions : public HMETauDecay {
 
 public:
 
-  HMETau2FourPions() {}
+  HMETau2FourPions() : a1M(), a1G(), rhoM(), rhoG(), sigM(), sigG(), omeM(), omeG(), picM(), pinM(), sigA(), sigP(), omeA(), omeP(), lambda2() {}
 
   void initConstants();
 
@@ -607,7 +607,7 @@ class HMETau2FivePions : public HMETauDecay {
 
 public:
 
-  HMETau2FivePions() {}
+  HMETau2FivePions() : a1M(), a1G(), rhoM(), rhoG(), omegaM(), omegaG(), omegaW(), sigmaM(), sigmaG(), sigmaW() {}
 
   void initConstants();
 
