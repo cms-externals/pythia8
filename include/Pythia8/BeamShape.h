@@ -23,7 +23,7 @@ class BeamShape {
 public:
 
   // Constructor.
-  BeamShape() {}
+  BeamShape() : deltaPxA(), deltaPyA(), deltaPzA(), deltaPxB(), deltaPyB(), deltaPzB(), vertexX(), vertexY(), vertexZ(), vertexT(), allowMomentumSpread(), allowVertexSpread(), sigmaPxA(), sigmaPyA(), sigmaPzA(), maxDevA(), sigmaPxB(), sigmaPyB(), sigmaPzB(), maxDevB(), sigmaVertexX(), sigmaVertexY(), sigmaVertexZ(), maxDevVertex(), sigmaTime(), maxDevTime(), offsetX(), offsetY(), offsetZ(), offsetT(), rndmPtr() {}
 
   // Destructor.
   virtual ~BeamShape() {}

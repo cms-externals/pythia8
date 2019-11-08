@@ -60,7 +60,7 @@ public:
   double tms;
 
   // Default constructor
-  HardProcess(){}
+  HardProcess() : hardIncoming1(), hardIncoming2(), tms(){}
   // Default destructor
   virtual ~HardProcess(){}
 
@@ -85,7 +85,7 @@ public:
   }
 
   // Constructor with path to LHE file
-  HardProcess( string LHEfile, ParticleData* particleData) {
+  HardProcess( string LHEfile, ParticleData* particleData) : hardIncoming1(), hardIncoming2(), tms() {
     state = Event();
     state.init("(hard process)", particleData);
     translateLHEFString(LHEfile);
@@ -165,12 +165,12 @@ class MergingHooks {
 public:
 
   // Constructor.
-  MergingHooks() :
+  MergingHooks() : useShowerPluginSave(), showers(),
     doUserMergingSave(false),
     doMGMergingSave(false),
     doKTMergingSave(false),
     doPTLundMergingSave(false),
-    doCutBasedMergingSave(false),
+    doCutBasedMergingSave(false), includeMassiveSave(), enforceStrongOrderingSave(), orderInRapiditySave(), pickByFullPSave(), pickByPoPT2Save(), includeRedundantSave(), pickBySumPTSave(), allowColourShufflingSave(), resetHardQRenSave(), resetHardQFacSave(), unorderedScalePrescipSave(), unorderedASscalePrescipSave(), unorderedPDFscalePrescipSave(), incompleteScalePrescipSave(), ktTypeSave(), nReclusterSave(), nQuarksMergeSave(), nRequestedSave(), scaleSeparationFactorSave(), nonJoinedNormSave(), fsrInRecNormSave(), herwigAcollFSRSave(), herwigAcollISRSave(), pT0ISRSave(), pTcutSave(),
     doNL3TreeSave(false),
     doNL3LoopSave(false),
     doNL3SubtSave(false),
@@ -180,16 +180,16 @@ public:
     doUNLOPSSubtNLOSave(false),
     doUMEPSTreeSave(false),
     doUMEPSSubtSave(false),
-    doEstimateXSection(false),
-    doRemoveDecayProducts(false),
+    doEstimateXSection(false), applyVeto(),
+    doRemoveDecayProducts(false), muMISave(), kFactor0jSave(), kFactor1jSave(), kFactor2jSave(), tmsValueSave(), tmsValueNow(), DparameterSave(), nJetMaxSave(), nJetMaxNLOSave(),
     doOrderHistoriesSave(true),
     doCutOnRecStateSave(false),
     doWeakClusteringSave(false),
-    doSQCDClusteringSave(false),
+    doSQCDClusteringSave(false), muFSave(), muRSave(), muFinMESave(), muRinMESave(),
     doIgnoreEmissionsSave(true),
-    doIgnoreStepSave(true),
+    doIgnoreStepSave(true), pTsave(), weightCKKWL1Save(), weightCKKWL2Save(), nMinMPISave(), weightCKKWLSave(), weightFIRSTSave(), nJetMaxLocal(), nJetMaxNLOLocal(),
     hasJetMaxLocal(false),
-    includeWGTinXSECSave(false) {
+    includeWGTinXSECSave(false), nHardNowSave(), nJetNowSave(), tmsHardNowSave(), tmsNowSave() {
       inputEvent = Event(); resonances.resize(0); infoPtr = 0; settingsPtr = 0;
       particleDataPtr = 0; partonSystemsPtr = 0; useOwnHardProcess = false;
       hardProcess = 0; stopScaleSave= 0.0; }

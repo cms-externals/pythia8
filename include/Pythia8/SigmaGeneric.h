@@ -26,7 +26,7 @@ public:
   // Constructor.
   Sigma2gg2qGqGbar(int idIn, int codeIn, int spinIn,
     string nameIn = "g g -> qG qGbar") : idNew(idIn), codeSave(codeIn),
-    spinSave(spinIn), nameSave(nameIn) {}
+    spinSave(spinIn), nCHV(), nameSave(nameIn), hasKappa(), openFracPair(), sigma(), sigTS(), sigUS(), sigSum(), kappam1() {}
 
   // Initialize process.
   virtual void initProc();
@@ -68,7 +68,7 @@ public:
   // Constructor.
   Sigma2qqbar2qGqGbar(int idIn, int codeIn, int spinIn,
     string nameIn = "q qbar -> qG qGbar") : idNew(idIn), codeSave(codeIn),
-    spinSave(spinIn), nameSave(nameIn) {}
+    spinSave(spinIn), nCHV(), nameSave(nameIn), openFracPair(), sigma(), sigSum(), kappa() {}
 
   // Initialize process.
   virtual void initProc();
@@ -110,7 +110,7 @@ public:
   // Constructor.
   Sigma2ffbar2fGfGbar(int idIn, int codeIn, int spinIn,
     string nameIn = "q qbar -> qG qGbar") : idNew(idIn), codeSave(codeIn),
-    spinSave(spinIn), nameSave(nameIn) {}
+    spinSave(spinIn), nCHV(), nameSave(nameIn), hasColour(), eQHV2(), openFracPair(), sigma0(), sigSum(), kappa(), colFac() {}
 
   // Initialize process.
   virtual void initProc();
@@ -151,7 +151,7 @@ class Sigma1ffbar2Zv : public Sigma1Process {
 public:
 
   // Constructor.
-  Sigma1ffbar2Zv() {}
+  Sigma1ffbar2Zv() : idZv(), mRes(), GammaRes(), m2Res(), GamMRat(), sigOut(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();

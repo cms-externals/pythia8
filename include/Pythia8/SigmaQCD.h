@@ -184,7 +184,7 @@ class Sigma2gg2gg : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2gg2gg() {}
+  Sigma2gg2gg() : sigTS(), sigUS(), sigTU(), sigSum(), sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -216,7 +216,7 @@ class Sigma2gg2qqbar : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2gg2qqbar() {}
+  Sigma2gg2qqbar() : nQuarkNew(), idNew(), mNew(), m2New(), sigTS(), sigUS(), sigSum(), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -256,7 +256,7 @@ class Sigma2qg2qg : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2qg2qg() {}
+  Sigma2qg2qg() : sigTS(), sigTU(), sigSum(), sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -289,7 +289,7 @@ class Sigma2qq2qq : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2qq2qq() {}
+  Sigma2qq2qq() : sigT(), sigU(), sigTU(), sigST(), sigSum() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -321,7 +321,7 @@ class Sigma2qqbar2gg : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2qqbar2gg() {}
+  Sigma2qqbar2gg() : sigTS(), sigUS(), sigSum(), sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -353,7 +353,7 @@ class Sigma2qqbar2qqbarNew : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2qqbar2qqbarNew() {}
+  Sigma2qqbar2qqbarNew() : nQuarkNew(), idNew(), mNew(), m2New(), sigS(), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -392,7 +392,7 @@ class Sigma2gg2QQbar : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2gg2QQbar(int idIn, int codeIn) : idNew(idIn), codeSave(codeIn) {}
+  Sigma2gg2QQbar(int idIn, int codeIn) : idNew(idIn), codeSave(codeIn), sigTS(), sigUS(), sigSum(), sigma(), openFracPair() {}
 
   // Initialize process.
   virtual void initProc();
@@ -434,7 +434,7 @@ class Sigma2qqbar2QQbar : public Sigma2Process {
 public:
 
   // Constructor.
-  Sigma2qqbar2QQbar(int idIn, int codeIn) : idNew(idIn), codeSave(codeIn) {}
+  Sigma2qqbar2QQbar(int idIn, int codeIn) : idNew(idIn), codeSave(codeIn), sigma(), openFracPair() {}
 
   // Initialize process.
   virtual void initProc();
@@ -476,7 +476,7 @@ class Sigma3gg2ggg : public Sigma3Process {
 public:
 
   // Constructor.
-  Sigma3gg2ggg() {}
+  Sigma3gg2ggg() : sigma(), pp() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -515,7 +515,7 @@ class Sigma3qqbar2ggg : public Sigma3Process {
 public:
 
   // Constructor.
-  Sigma3qqbar2ggg() {}
+  Sigma3qqbar2ggg() : config(), a(), b(), pp(), ab(), sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -564,7 +564,7 @@ class Sigma3qg2qgg : public Sigma3qqbar2ggg {
 public:
 
   // Constructor.
-  Sigma3qg2qgg() {}
+  Sigma3qg2qgg() : sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -599,7 +599,7 @@ class Sigma3gg2qqbarg : public Sigma3qqbar2ggg {
 public:
 
   // Constructor.
-  Sigma3gg2qqbarg() {}
+  Sigma3gg2qqbarg() : nQuarkNew() {}
 
   // Initialize process.
   virtual void initProc();
@@ -633,7 +633,7 @@ class Sigma3qq2qqgDiff : public Sigma3Process {
 public:
 
   // Constructor.
-  Sigma3qq2qqgDiff() {}
+  Sigma3qq2qqgDiff() : config(), s(), t(), u(), sp(), tp(), up(), sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -683,7 +683,7 @@ class Sigma3qqbar2qqbargDiff : public Sigma3qq2qqgDiff {
 public:
 
   // Constructor.
-  Sigma3qqbar2qqbargDiff() {}
+  Sigma3qqbar2qqbargDiff() : nQuarkNew() {}
 
   // Initialize process.
   virtual void initProc();
@@ -721,7 +721,7 @@ class Sigma3qg2qqqbarDiff : public Sigma3qq2qqgDiff {
 public:
 
   // Constructor.
-  Sigma3qg2qqqbarDiff() {}
+  Sigma3qg2qqqbarDiff() : nQuarkNew(), sigma() {}
 
   // Initialize process.
   virtual void initProc();
@@ -761,7 +761,7 @@ class Sigma3qq2qqgSame : public Sigma3Process {
 public:
 
   // Constructor.
-  Sigma3qq2qqgSame() {}
+  Sigma3qq2qqgSame() : config(), s(), t(), u(), sp(), tp(), up(), ssp(), ttp(), uup(), s_sp(), t_tp(), u_up(), sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();
@@ -844,7 +844,7 @@ class Sigma3qg2qqqbarSame : public Sigma3qq2qqgSame {
 public:
 
   // Constructor.
-  Sigma3qg2qqqbarSame() {}
+  Sigma3qg2qqqbarSame() : sigma() {}
 
   // Calculate flavour-independent parts of cross section.
   virtual void sigmaKin();

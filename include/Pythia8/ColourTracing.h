@@ -23,6 +23,9 @@ class ColourTracing {
 
 public:
 
+  // Constructor.
+  ColourTracing() : infoPtr() {}
+
   void init( Info* infoPtrIn) {infoPtr = infoPtrIn;}
 
   // Setup the colour lists.

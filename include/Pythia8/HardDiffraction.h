@@ -32,7 +32,7 @@ class HardDiffraction {
 public:
 
   // Constructor and destructor.
-  HardDiffraction() {};
+  HardDiffraction() : pomFlux(), iBeam(), idA(), idB(), rescale(), normPom(), a1(), a2(), a3(), A1(), A2(), A3(), a0(), ap(), b0(), mA(), mB(), s(), s1(), s2(), s3(), s4(), xPomA(), xPomB(), tPomA(), tPomB(), thetaPomA(), thetaPomB(), infoPtr(), rndmPtr(), beamAPtr(), beamBPtr(), beamPomAPtr(), beamPomBPtr(), tmpPDFPtr() {};
   ~HardDiffraction() {}
 
   // Initialise constants

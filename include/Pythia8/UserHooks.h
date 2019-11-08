@@ -232,7 +232,7 @@ protected:
   // Constructor.
   UserHooks() : infoPtr(0), settingsPtr(0), particleDataPtr(0), rndmPtr(0),
     beamAPtr(0), beamBPtr(0), beamPomAPtr(0), beamPomBPtr(0), coupSMPtr(0),
-    partonSystemsPtr(0), sigmaTotPtr(0), selBias(1.) {}
+    partonSystemsPtr(0), sigmaTotPtr(0), selBias(1.), enhancedEventWeight(), pTEnhanced(), wtEnhanced() {}
 
   // Pointer to various information on the generation.
   Info*          infoPtr;

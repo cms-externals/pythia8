@@ -522,10 +522,10 @@ const double pseudojet_invalid_phi = -100.0;
 const double pseudojet_invalid_rap = -1e200;
 class PseudoJet {
  public:
-  PseudoJet() : _px(0), _py(0), _pz(0), _E(0) {_finish_init(); _reset_indices();}
+  PseudoJet() : _px(0), _py(0), _pz(0), _E(0), _phi(), _rap(), _kt2(), _cluster_hist_index(), _user_index() {_finish_init(); _reset_indices();}
   PseudoJet(const double px, const double py, const double pz, const double E);
   template <class L> PseudoJet(const L & some_four_vector);
-  PseudoJet(bool /* dummy */) {}
+  PseudoJet(bool /* dummy */) : _px(), _py(), _pz(), _E(), _phi(), _rap(), _kt2(), _cluster_hist_index(), _user_index() {}
   virtual ~PseudoJet(){};
   inline double E()   const {return _E;}
   inline double e()   const {return _E;} // like CLHEP
@@ -749,7 +749,7 @@ public:
 private:
   const std::vector<double> * _ref_values;
 };
-template <class L> inline  PseudoJet::PseudoJet(const L & some_four_vector) {
+template <class L> inline  PseudoJet::PseudoJet(const L & some_four_vector) : _px(), _py(), _pz(), _E(), _phi(), _rap(), _kt2(), _cluster_hist_index(), _user_index() {
   reset(some_four_vector);
 }
 inline void PseudoJet::_reset_indices() { 
@@ -1039,12 +1039,12 @@ public:
   JetDefinition(JetAlgorithm jet_algorithm_in, 
                 double R_in, 
                 RecombinationScheme recomb_scheme_in = E_scheme,
-                Strategy strategy_in = Best) {
+                Strategy strategy_in = Best) : _Rparam(), _extra_param(), _plugin(), _recombiner() {
     *this = JetDefinition(jet_algorithm_in, R_in, recomb_scheme_in, strategy_in, 1);
   }
   JetDefinition(JetAlgorithm jet_algorithm_in, 
                 RecombinationScheme recomb_scheme_in = E_scheme,
-                Strategy strategy_in = Best) {
+                Strategy strategy_in = Best) : _Rparam(), _extra_param(), _plugin(), _recombiner() {
     double dummyR = 0.0;
     *this = JetDefinition(jet_algorithm_in, dummyR, recomb_scheme_in, strategy_in, 0);
   }
@@ -1052,20 +1052,20 @@ public:
                 double R_in, 
                 double xtra_param_in,
                 RecombinationScheme recomb_scheme_in = E_scheme,
-                Strategy strategy_in = Best) {
+                Strategy strategy_in = Best) : _Rparam(), _extra_param(), _plugin(), _recombiner() {
     *this = JetDefinition(jet_algorithm_in, R_in, recomb_scheme_in, strategy_in, 2);
     set_extra_param(xtra_param_in);
   }
   JetDefinition(JetAlgorithm jet_algorithm_in, 
                 double R_in, 
                 const Recombiner * recombiner_in,
-                Strategy strategy_in = Best) {
+                Strategy strategy_in = Best) : _Rparam(), _extra_param(), _plugin() {
     *this = JetDefinition(jet_algorithm_in, R_in, external_scheme, strategy_in);
     _recombiner = recombiner_in;
   }
   JetDefinition(JetAlgorithm jet_algorithm_in, 
                 const Recombiner * recombiner_in,
-                Strategy strategy_in = Best) {
+                Strategy strategy_in = Best) : _Rparam(), _extra_param(), _plugin() {
     *this = JetDefinition(jet_algorithm_in, external_scheme, strategy_in);
     _recombiner = recombiner_in;
   }
@@ -1073,14 +1073,14 @@ public:
                 double R_in, 
                 double xtra_param_in,
                 const Recombiner * recombiner_in,
-                Strategy strategy_in = Best) {
+                Strategy strategy_in = Best) : _Rparam(), _extra_param(), _plugin() {
     *this = JetDefinition(jet_algorithm_in, R_in, xtra_param_in, external_scheme, strategy_in);
     _recombiner = recombiner_in;
   }
-  JetDefinition()  {
+  JetDefinition() : _Rparam(), _extra_param(), _plugin(), _recombiner()  {
     *this = JetDefinition(undefined_jet_algorithm, 1.0);
   }
-  JetDefinition(const Plugin * plugin_in) {
+  JetDefinition(const Plugin * plugin_in) : _recombiner() {
     _plugin = plugin_in;
     _strategy = plugin_strategy;
     _Rparam = _plugin->R();
@@ -1098,7 +1098,7 @@ public:
                 double R_in, 
                 Strategy strategy_in,
                 RecombinationScheme recomb_scheme_in = E_scheme,
-                int nparameters_in = 1){
+                int nparameters_in = 1) : _Rparam(), _extra_param(), _plugin(), _recombiner(){
     (*this) = JetDefinition(jet_algorithm_in,R_in,recomb_scheme_in,strategy_in,nparameters_in);
   }
   template <class L> 
@@ -1303,7 +1303,7 @@ FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 class ClusterSequenceStructure : public PseudoJetStructureBase{
 public:
   ClusterSequenceStructure() : _associated_cs(NULL){}
-  ClusterSequenceStructure(const ClusterSequence *cs){
+  ClusterSequenceStructure(const ClusterSequence *cs) : _associated_cs(){
     set_associated_cs(cs);
   };
   virtual ~ClusterSequenceStructure();
@@ -1351,12 +1351,12 @@ class ClusterSequenceStructure;
 class DynamicNearestNeighbours;
 class ClusterSequence {
  public: 
-  ClusterSequence () : _deletes_self_when_unused(false) {}
+  ClusterSequence () : _writeout_combinations(), _initial_n(), _Rparam(), _R2(), _invR2(), _Qtot(), _structure_use_count_after_construction(), _deletes_self_when_unused(false), _plugin_activated(), _tiles_eta_min(), _tiles_eta_max(), _tile_size_eta(), _tile_size_phi(), _n_tiles_phi(), _tiles_ieta_min(), _tiles_ieta_max() {}
   template<class L> ClusterSequence (
 			          const std::vector<L> & pseudojets,
 				  const JetDefinition & jet_def,
 				  const bool & writeout_combinations = false);
-  ClusterSequence (const ClusterSequence & cs) : _deletes_self_when_unused(false) {
+  ClusterSequence (const ClusterSequence & cs) : _writeout_combinations(), _initial_n(), _Rparam(), _R2(), _invR2(), _Qtot(), _structure_use_count_after_construction(), _deletes_self_when_unused(false), _plugin_activated(), _tiles_eta_min(), _tiles_eta_max(), _tile_size_eta(), _tile_size_phi(), _n_tiles_phi(), _tiles_ieta_min(), _tiles_ieta_max() {
     transfer_from_sequence(cs);
   }
   ClusterSequence & operator=(const ClusterSequence & cs);
@@ -1632,8 +1632,8 @@ template<class L> ClusterSequence::ClusterSequence (
 			          const std::vector<L> & pseudojets,
 				  const JetDefinition & jet_def_in,
 				  const bool & writeout_combinations) :
-  _jet_def(jet_def_in), _writeout_combinations(writeout_combinations),
-  _structure_shared_ptr(new ClusterSequenceStructure(this))
+  _jet_def(jet_def_in), _writeout_combinations(writeout_combinations), _initial_n(), _Rparam(), _R2(), _invR2(), _Qtot(),
+  _structure_shared_ptr(new ClusterSequenceStructure(this)), _structure_use_count_after_construction(), _deletes_self_when_unused(), _plugin_activated(), _tiles_eta_min(), _tiles_eta_max(), _tile_size_eta(), _tile_size_phi(), _n_tiles_phi(), _tiles_ieta_min(), _tiles_ieta_max()
 {
   _transfer_input_jets(pseudojets);
   _decant_options_partial();
@@ -1770,8 +1770,8 @@ FJCORE_END_NAMESPACE      // defined in fastjet/internal/base.hh
 FJCORE_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 template<class BJ, class I = _NoInfo> class NNH : public NNBase<I> {
 public:
-  NNH(const std::vector<PseudoJet> & jets)           : NNBase<I>()     {start(jets);}
-  NNH(const std::vector<PseudoJet> & jets, I * info) : NNBase<I>(info) {start(jets);}
+  NNH(const std::vector<PseudoJet> & jets)           : n(), NNBase<I>()     {start(jets);}
+  NNH(const std::vector<PseudoJet> & jets, I * info) : n(), NNBase<I>(info) {start(jets);}
   void start(const std::vector<PseudoJet> & jets);
   double dij_min(int & iA, int & iB);
   void remove_jet(int iA);
