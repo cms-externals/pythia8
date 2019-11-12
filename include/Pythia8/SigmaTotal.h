@@ -26,7 +26,7 @@ class SigmaTotal {
 public:
 
   // Constructor.
-  SigmaTotal() : isCalc(false) {};
+  SigmaTotal() : PomFlux(), isCalc(false), setTotal(), zeroAXB(), doDampen(), setElastic(), sigAXB2TeV(), sigTotOwn(), sigElOwn(), sigXBOwn(), sigAXOwn(), sigXXOwn(), sigAXBOwn(), maxXBOwn(), maxAXOwn(), maxXXOwn(), maxAXBOwn(), bSlope(), rho(), lambda(), tAbsMin(), alphaEM0(), sigmaPomP(), mPomP(), pPomP(), fracSigmaNDgamma(), mMin0(), cResSv(), mRes0(), MBReps(), MBRalpha(), MBRbeta0(), MBRsigma0(), m2min(), dyminSDflux(), dyminDDflux(), dyminCDflux(), dyminSD(), dyminDD(), dyminCD(), dyminSigSD(), dyminSigDD(), dyminSigCD(), sdpmax(), ddpmax(), dpepmax(), infoPtr(), particleDataPtr(), sigTot(), sigEl(), sigXB(), sigAX(), sigXX(), sigAXB(), sigND(), bEl(), s(), bA(), bB(), alP2(), s0(), mMinXBsave(), mMinAXsave(), mMinAXBsave(), mResXBsave(), mResAXsave() {};
 
   // Store pointers and initialize data members.
   void init(Info* infoPtrIn, Settings& settings,

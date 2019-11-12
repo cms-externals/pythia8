@@ -24,7 +24,7 @@ class GammaKinematics {
 public:
 
   // Constructor.
-  GammaKinematics() {}
+  GammaKinematics() : infoPtr(), settingsPtr(), rndmPtr(), beamAPtr(), beamBPtr(), Q2maxGamma(), Wmin(), Wmax(), eCM(), sCM(), m2BeamA(), m2BeamB(), Q2min1(), Q2min2(), xGamma1(), xGamma2(), Q2gamma1(), Q2gamma2(), phi1(), phi2(), kT1(), kT2(), kz1(), kz2(), mGmGm(), m2GmGm(), theta1(), theta2(), theta1Max(), theta2Max(), eCM2A(), eCM2B(), sHatNew(), Q2min(), Q2gamma(), kT(), kz(), phi(), theta(), gammaMode(), sample1Gamma(), sample2Gamma(), sideGammaA() {}
 
   // Sample the trial or final event kinematics.
   bool init(Info* infoPtrIn, Settings* settingsPtrIn, Rndm* rndmPtrIn,

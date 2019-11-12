@@ -42,8 +42,8 @@ public:
     system(systemIn), side(sideIn), iRadiator(iRadiatorIn),
     iRecoiler(iRecoilerIn), pTmax(pTmaxIn), colType(colTypeIn),
     chgType(chgTypeIn), weakType(weakTypeIn), MEtype(MEtypeIn),
-    normalRecoil(normalRecoilIn), weakPol(weakPolIn), nBranch(0),
-    pT2Old(0.), zOld(0.5) { }
+    normalRecoil(normalRecoilIn), weakPol(weakPolIn), nBranch(0), idDaughter(), idMother(), idSister(), iFinPol(), x1(), x2(), m2Dip(), pT2(), z(), xMo(), Q2(), mSister(), m2Sister(), pT2corr(),
+    pT2Old(0.), zOld(0.5), asymPol(), pAccept() { }
 
   // Store values for trial emission.
   void store( int idDaughterIn, int idMotherIn, int idSisterIn,
@@ -80,7 +80,7 @@ class SpaceShower {
 public:
 
   // Constructor.
-  SpaceShower() {beamOffset = 0;}
+  SpaceShower() : mergingHooksPtr(), infoPtr(), settingsPtr(), particleDataPtr(), rndmPtr(), coupSMPtr(), beamAPtr(), beamBPtr(), partonSystemsPtr(), userHooksPtr(), rescatterFail(), iSysSel(), pTmaxFudge(), doQCDshower(), doQEDshowerByQ(), doQEDshowerByL(), useSamePTasMPI(), doWeakShower(), doMEcorrections(), doMEafterFirst(), doPhiPolAsym(), doPhiPolAsymHard(), doPhiIntAsym(), doRapidityOrder(), useFixedFacScale(), doSecondHard(), canVetoEmission(), hasUserHooks(), alphaSuseCMW(), singleWeakEmission(), vetoWeakJets(), weakExternal(), doRapidityOrderMPI(), doUncertainties(), uVarMuSoftCorr(), uVarMPIshowers(), doMPI(), gamma2qqbar(), doDipoleRecoil(), doPartonVertex(), pTmaxMatch(), pTdampMatch(), alphaSorder(), alphaSnfmax(), alphaEMorder(), nQuarkIn(), enhanceScreening(), weakMode(), pTdampFudge(), mc(), mb(), m2c(), m2b(), renormMultFac(), factorMultFac(), fixedFacScale2(), alphaSvalue(), alphaS2pi(), Lambda3flav(), Lambda4flav(), Lambda5flav(), Lambda3flav2(), Lambda4flav2(), Lambda5flav2(), pT0Ref(), ecmRef(), ecmPow(), pTmin(), sCM(), eCM(), pT0(), pTminChgQ(), pTminChgL(), pT20(), pT2min(), pT2minChgQ(), pT2minChgL(), pTweakCut(), pT2weakCut(), pTmaxFudgeMPI(), strengthIntAsym(), weakEnhancement(), mZ(), gammaZ(), thetaWRat(), mW(), gammaW(), weakMaxWt(), vetoWeakDeltaR2(), dASmax(), cNSpTmin(), uVarpTmin2(), overFactor(), sideA(), dopTlimit1(), dopTlimit2(), dopTdamp(), hasWeaklyRadiated(), tChannel(), doUncertaintiesNow(), iNow(), iRec(), idDaughter(), nRad(), idResFirst(), idResSecond(), xDaughter(), x1Now(), x2Now(), m2Dip(), m2Rec(), pT2damp(), pTbegRef(), pdfScale2(), doTrialNow(), canEnhanceEmission(), canEnhanceTrial(), canEnhanceET(), iDipNow(), iSysNow(), dipEndNow(), iDipSel(), dipEndSel(), nUncertaintyVariations(), nVarQCD(), uVarNflavQ() {beamOffset = 0;}
 
   // Destructor.
   virtual ~SpaceShower() {}

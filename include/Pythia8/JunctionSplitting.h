@@ -30,6 +30,9 @@ class JunctionSplitting {
 
 public:
 
+  // Constructor
+  JunctionSplitting() : eNormJunction(), allowDoubleJunRem(), infoPtr(), rndmPtr() {}
+
   // Initialization.
   void init(Info* infoPtrIn, Settings& settings, Rndm* rndmPtrIn,
     ParticleData* particleDataPtrIn);

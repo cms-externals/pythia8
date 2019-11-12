@@ -33,7 +33,7 @@ class StringEnd {
 public:
 
   // Constructor.
-  StringEnd() {}
+  StringEnd() : particleDataPtr(), flavSelPtr(), pTSelPtr(), zSelPtr(), fromPos(), thermalModel(), mT2suppression(), iEnd(), iMax(), idHad(), iPosOld(), iNegOld(), iPosNew(), iNegNew(), pxOld(), pyOld(), pxNew(), pyNew(), pxHad(), pyHad(), mHad(), mT2Had(), zHad(), GammaOld(), GammaNew(), xPosOld(), xPosNew(), xPosHad(), xNegOld(), xNegNew(), xNegHad(), aLund(), bLund() {}
 
   // Save pointers.
   void init( ParticleData* particleDataPtrIn, StringFlav* flavSelPtrIn,
@@ -95,7 +95,7 @@ class StringFragmentation {
 public:
 
   // Constructor.
-  StringFragmentation() {}
+  StringFragmentation() : infoPtr(), particleDataPtr(), rndmPtr(), flavSelPtr(), pTSelPtr(), zSelPtr(), userHooksPtr(), closePacking(), stopMass(), stopNewFlav(), stopSmear(), eNormJunction(), eBothLeftJunction(), eMaxLeftJunction(), eMinLeftJunction(), mJoin(), bLund(), pT20(), hasJunction(), isClosed(), iPos(), iNeg(), w2Rem(), stopMassNow() {}
 
   // Initialize and save pointers.
   void init(Info* infoPtrIn, Settings& settings,

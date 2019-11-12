@@ -32,8 +32,8 @@ public:
   Info() : LHEFversionSave(0), initrwgt(NULL), generators(NULL),
     weightgroups(NULL), init_weights(NULL), eventAttributes(NULL),
     weights_detailed(NULL), weights_compressed(NULL), scales(NULL),
-    weights(NULL), rwgt(NULL), eCMSave(0.), lowPTmin(false), a0MPISave(0.),
-    abortPartonLevel(false), weightCKKWLSave(1.), weightFIRSTSave(0.) {
+    weights(NULL), rwgt(NULL), eventWeightLHEF(), idASave(), idBSave(), pzASave(), eASave(), mASave(), pzBSave(), eBSave(), mBSave(), eCMSave(0.), sSave(), lowPTmin(false), nTry(), nSel(), nAcc(), sigGen(), sigErr(), wtAccSum(), lhaStrategySave(), a0MPISave(0.), isRes(), isDiffA(), isDiffB(), isDiffC(), isND(), isLH(), hasSubSave(), bIsSet(), evolIsSet(), atEOF(), isVal1(), isVal2(), hasHistorySave(),
+    abortPartonLevel(false), isHardDiffA(), isHardDiffB(), hasUnresBeams(), hasPomPsys(), codeSave(), codeSubSave(), nFinalSave(), nFinalSubSave(), nTotal(), id1Save(), id2Save(), id1pdfSave(), id2pdfSave(), nMPISave(), nISRSave(), nFSRinProcSave(), nFSRinResSave(), x1Save(), x2Save(), x1pdfSave(), x2pdfSave(), pdf1Save(), pdf2Save(), Q2FacSave(), alphaEMSave(), alphaSSave(), Q2RenSave(), scalupSave(), sH(), tH(), uH(), pTH(), m3H(), m4H(), thetaH(), phiH(), bMPISave(), enhanceMPISave(), enhanceMPIavgSave(), bMPIoldSave(), enhanceMPIoldSave(), enhanceMPIoldavgSave(), pTmaxMPISave(), pTmaxISRSave(), pTmaxFSRSave(), pTnowSave(), zNowISRSave(), pT2NowISRSave(), xPomA(), xPomB(), tPomA(), tPomB(), gammaModeEvent(), x1GammaSave(), x2GammaSave(), Q2Gamma1Save(), Q2Gamma2Save(), eCMsubSave(), thetaLepton1(), thetaLepton2(), sHatNewSave(), counters(), weightCKKWLSave(1.), weightFIRSTSave(0.) {
     for (int i = 0; i < 40; ++i) counters[i] = 0;
     setNWeights(1);}
 

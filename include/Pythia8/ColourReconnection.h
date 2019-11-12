@@ -41,7 +41,7 @@ public:
     int colReconnectionIn = 0, bool isJunIn = false, bool isAntiJunIn = false,
     bool isActiveIn = true, bool isRealIn = false) : col(colIn), iCol(iColIn),
     iAcol(iAcolIn), colReconnection(colReconnectionIn), isJun(isJunIn),
-    isAntiJun(isAntiJunIn),isActive(isActiveIn), isReal(isRealIn)
+    isAntiJun(isAntiJunIn),isActive(isActiveIn), isReal(isRealIn), inChain(), p1p2()
     {leftDip = 0; rightDip = 0; iColLeg = 0; iAcolLeg = 0; printed = false;}
 
   double mDip(Event & event) {
@@ -70,11 +70,11 @@ class ColourJunction : public Junction {
 
 public:
 
-  ColourJunction(const Junction& ju) : Junction(ju) {
+  ColourJunction(const Junction& ju) : Junction(ju), dips(), dipsOrig() {
       for(int i = 0;i < 3;++i) {
         dips[i] = 0; dipsOrig[i] = 0;}
   }
-  ColourJunction(const ColourJunction& ju) : Junction(Junction(ju)) {
+  ColourJunction(const ColourJunction& ju) : Junction(Junction(ju)), dips(), dipsOrig() {
     for(int i = 0;i < 3;++i) {
       dips[i] = ju.dips[i]; dipsOrig[i] = ju.dipsOrig[i];}
   }
@@ -134,7 +134,7 @@ class ColourParticle : public Particle {
 
 public:
 
- ColourParticle(const Particle& ju) : Particle(ju) {}
+ ColourParticle(const Particle& ju) : Particle(ju), isJun(), junKind() {}
 
   vector<vector<ColourDipole *> > dips;
   vector<bool> colEndIncluded, acolEndIncluded;
@@ -160,7 +160,7 @@ class ColourReconnection {
 public:
 
   // Constructor
-  ColourReconnection() {}
+  ColourReconnection() : allowJunctions(), sameNeighbourCol(), singleReconOnly(), lowerLambdaOnly(), nSys(), nReconCols(), swap1(), swap2(), reconnectMode(), flipMode(), timeDilationMode(), eCM(), sCM(), pT0(), pT20Rec(), pT0Ref(), ecmRef(), ecmPow(), reconnectRange(), m0(), m0sqr(), m2Lambda(), fracGluon(), dLambdaCut(), timeDilationPar(), timeDilationParGeV(), tfrag(), blowR(), blowT(), rHadron(), kI(), infoPtr(), particleDataPtr(), rndmPtr(), beamAPtr(), beamBPtr(), partonSystemsPtr(), nColMove() {}
 
   // Initialization.
   bool init( Info* infoPtrIn, Settings& settings, Rndm* rndmPtrIn,

@@ -658,7 +658,7 @@ public:
       SCALUP(0.0), AQEDUP(0.0), AQCDUP(0.0), heprup(0) {}
 
   // Copy constructor
-  HEPEUP(const HEPEUP & x) {
+  HEPEUP(const HEPEUP & x) : NUP(), IDPRUP(), XWGTUP(), SCALUP(), AQEDUP(), AQCDUP(), heprup() {
     operator=(x);
   }
 
@@ -807,14 +807,14 @@ public:
   // filename: the name of the file to read from.
   //
   Reader(string filenameIn)
-    : filename(filenameIn), intstream(NULL), file(NULL) {
+    : filename(filenameIn), intstream(NULL), file(NULL), version() {
     intstream = new igzstream(filename.c_str());
     file = intstream;
     isGood = init();
   }
 
   Reader(istream* is)
-    : filename(""), intstream(NULL), file(is) {
+    : filename(""), intstream(NULL), file(is), version() {
     isGood = init();
   }
 

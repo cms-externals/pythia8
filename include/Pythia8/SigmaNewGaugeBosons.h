@@ -59,7 +59,7 @@ class Sigma1ffbar2gmZZprime : public Sigma1ffbarZprimeWprime {
 public:
 
   // Constructor.
-  Sigma1ffbar2gmZZprime() {}
+  Sigma1ffbar2gmZZprime() : gmZmode(), maxZpGen(), mRes(), GammaRes(), m2Res(), GamMRat(), sin2tW(), cos2tW(), thetaWRat(), mZ(), GammaZ(), m2Z(), GamMRatZ(), afZp(), vfZp(), coupZpWW(), anglesZpWW(), gamSum(), gamZSum(), ZSum(), gamZpSum(), ZZpSum(), ZpSum(), gamNorm(), gamZNorm(), ZNorm(), gamZpNorm(), ZZpNorm(), ZpNorm(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();
@@ -106,7 +106,7 @@ class Sigma1ffbar2Wprime : public Sigma1ffbarZprimeWprime {
 public:
 
   // Constructor.
-  Sigma1ffbar2Wprime() {}
+  Sigma1ffbar2Wprime() : mRes(), GammaRes(), m2Res(), GamMRat(), thetaWRat(), sigma0Pos(), sigma0Neg(), aqWp(), vqWp(), alWp(), vlWp(), coupWpWZ(), anglesWpWZ(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();
@@ -148,7 +148,7 @@ class Sigma1ffbar2Rhorizontal : public Sigma1Process {
 public:
 
   // Constructor.
-  Sigma1ffbar2Rhorizontal() {}
+  Sigma1ffbar2Rhorizontal() : mRes(), GammaRes(), m2Res(), GamMRat(), thetaWRat(), sigma0Pos(), sigma0Neg(), particlePtr() {}
 
   // Initialize process.
   virtual void initProc();

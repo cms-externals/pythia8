@@ -26,7 +26,7 @@ class HelicityMatrixElement {
 public:
 
   // Constructor and destructor.
-  HelicityMatrixElement() {};
+  HelicityMatrixElement() : DECAYWEIGHTMAX(), particleDataPtr(), couplingsPtr(), settingsPtr() {};
   virtual ~HelicityMatrixElement() {};
 
   // Initialize the physics matrices and pointers.
@@ -131,6 +131,8 @@ class HMETwoFermions2W2TwoFermions : public HelicityMatrixElement {
 
 public:
 
+  HMETwoFermions2W2TwoFermions() : p0CA(), p2CA(), p0CV(), p2CV() {}
+
   void initConstants();
 
   void initWaves(vector<HelicityParticle>&);
@@ -152,6 +154,8 @@ private:
 class HMETwoFermions2GammaZ2TwoFermions : public HelicityMatrixElement {
 
 public:
+
+  HMETwoFermions2GammaZ2TwoFermions() : p0CAZ(), p2CAZ(), p0CVZ(), p2CVZ(), p0CAZp(), p2CAZp(), p0CVZp(), p2CVZp(), cos2W(), sin2W(), zG(), zM(), zpG(), zpM(), s(), p0Q(), p2Q(), zaxis(), includeGamma(), includeZ(), includeZp() {}
 
   void initConstants();
 
@@ -205,6 +209,8 @@ class HMEW2TwoFermions : public HMEX2TwoFermions {
 
 public:
 
+  HMEW2TwoFermions() : p2CA(), p2CV() {}
+
   void initConstants();
 
   complex calculateME(vector<int>);
@@ -235,6 +241,8 @@ public:
 class HMEZ2TwoFermions : public HMEX2TwoFermions {
 
 public:
+
+  HMEZ2TwoFermions() : p2CA(), p2CV() {}
 
   void initConstants();
 
@@ -358,6 +366,8 @@ class HMETau2TwoMesonsViaVectorScalar : public HMETauDecay {
 
 public:
 
+  HMETau2TwoMesonsViaVectorScalar() : scaC(), vecC() {}
+
   void initConstants();
 
   void initHadronicCurrent(vector<HelicityParticle>&);
@@ -380,6 +390,8 @@ private:
 class HMETau2ThreeMesons : public HMETauDecay {
 
 public:
+
+  HMETau2ThreeMesons() : s1(), s2(), s3(), s4() {}
 
   void initConstants();
 
@@ -429,6 +441,10 @@ protected:
 
 class HMETau2ThreePions : public HMETau2ThreeMesons {
 
+public:
+
+  HMETau2ThreePions() : f0M(), f0G(), f0P(), f0A(), f2M(), f2G(), f2P(), f2A(), sigM(), sigG(), sigP(), sigA() {}
+
 private:
 
   void initResonances();
@@ -457,6 +473,10 @@ private:
 
 class HMETau2ThreeMesonsWithKaons : public HMETau2ThreeMesons {
 
+public:
+
+  HMETau2ThreeMesonsWithKaons() : kM(), piM(), piW() {}
+
 private:
 
   void initResonances();
@@ -480,6 +500,10 @@ private:
 // Helicity matrix element for a tau decay into generic three mesons.
 
 class HMETau2ThreeMesonsGeneric : public HMETau2ThreeMesons {
+
+public:
+
+  HMETau2ThreeMesonsGeneric() : kM(), piM(), piW() {}
 
 private:
 
@@ -505,6 +529,8 @@ class HMETau2TwoPionsGamma : public HMETauDecay {
 
 public:
 
+  HMETau2TwoPionsGamma() : piM() {}
+
   void initConstants();
 
   void initWaves(vector<HelicityParticle>&);
@@ -529,6 +555,8 @@ protected:
 class HMETau2FourPions : public HMETauDecay {
 
 public:
+
+  HMETau2FourPions() : a1M(), a1G(), rhoM(), rhoG(), sigM(), sigG(), omeM(), omeG(), picM(), pinM(), sigA(), sigP(), omeA(), omeP(), lambda2() {}
 
   void initConstants();
 
@@ -578,6 +606,8 @@ private:
 class HMETau2FivePions : public HMETauDecay {
 
 public:
+
+  HMETau2FivePions() : a1M(), a1G(), rhoM(), rhoG(), omegaM(), omegaG(), omegaW(), sigmaM(), sigmaG(), sigmaW() {}
 
   void initConstants();
 
