@@ -1,5 +1,5 @@
 // SimpleTimeShower.cc is a part of the PYTHIA event generator.
-// Copyright (C) 2018 Torbjorn Sjostrand.
+// Copyright (C) 2019 Torbjorn Sjostrand.
 // PYTHIA is licenced under the GNU GPL v2 or later, see COPYING for details.
 // Please respect the MCnet Guidelines, see GUIDELINES for details.
 
@@ -3077,12 +3077,16 @@ bool SimpleTimeShower::branch( Event& event, bool isInterleaved) {
   int iSysSelRec   = dipSel->systemRec;
 
   // Sometimes need to patch up colType in junction systems.
-  int idRec        = recBef.id();
   int colTypeTmp   = dipSel->colType;
-  if (idRec >  0 && idRec < 9 && colTypeTmp > 0) colTypeTmp = -colTypeTmp;
-  if (idRec > -9 && idRec < 0 && colTypeTmp < 0) colTypeTmp = -colTypeTmp;
-  if (idRad >  0 && idRad < 9 && colTypeTmp < 0) colTypeTmp = -colTypeTmp;
-  if (idRad > -9 && idRad < 0 && colTypeTmp > 0) colTypeTmp = -colTypeTmp;
+  int colTypeRec   = particleDataPtr->colType( recBef.id() );
+  // Negate colour type if recoiler is initial-state quark.
+  if (!recBef.isFinal()) colTypeRec = -colTypeRec;
+  int colTypeRad   = particleDataPtr->colType( idRad );
+  // Perform junction tests for all colour (anti)triplets.
+  if (colTypeRec ==  1 && colTypeTmp > 0) colTypeTmp = -colTypeTmp;
+  if (colTypeRec == -1 && colTypeTmp < 0) colTypeTmp = -colTypeTmp;
+  if (colTypeRad ==  1 && colTypeTmp < 0) colTypeTmp = -colTypeTmp;
+  if (colTypeRad == -1 && colTypeTmp > 0) colTypeTmp = -colTypeTmp;
 
   // Default OK for photon, photon_HV or gluon_HV emission.
   if (dipSel->flavour == 22 || dipSel->flavour == idHV) {
