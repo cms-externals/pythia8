@@ -72,18 +72,30 @@ Here <ei>Q</ei> is the hard-process renormalization scale for the
 hardest process and the <ei>pT</ei> scale for subsequent multiparton 
 interactions, <ei>m</ei> the mass of the system, and 
 <ei>sigma_soft</ei>, <ei>sigma_hard</ei>, <ei>Q_half</ei>, 
-<ei>m_half</ei> and <ei>y_damp</ei> parameters defined below. 
+<ei>m_half</ei> and <ei>y_damp</ei> parameters defined below.
 Furthermore each separately defined beam remnant has a distribution 
 of width <ei>sigma_remn</ei>, independently of kinematical variables. 
- 
+<p/>
+Note that, for external (LHE) events <ei>Q_half</ei> is treated as
+zero. This is so that LHE events with low-pT extra jets (e.g., in
+the context of POWHEG-style merging) are given the same primordial kT
+as their Born-level counterparts.
+
 <flag name="BeamRemnants:primordialKT" default="on"> 
 Allow or not selection of primordial <ei>kT</ei> according to the 
 parameter values below. 
+</flag>
+
+<flag name="BeamRemnants:hardKTOnlyLHE" default="off"> 
+  Special treatment of primordial <ei>kT</ei> for LHE events, where the
+  scale might not correspond to the hard scale of the process.   If
+  set on, only hard <ei>kT</ei> is added.
 </flag> 
  
 <parm name="BeamRemnants:primordialKTsoft" default="0.9" min="0."> 
 The width <ei>sigma_soft</ei> in the above equation, assigned as a 
-primordial <ei>kT</ei> to initiators in the soft-interaction limit. 
+primordial <ei>kT</ei> to initiators in the soft-interaction
+limit. 
 </parm> 
  
 <parm name="BeamRemnants:primordialKThard" default="1.8" min="0."> 
@@ -93,7 +105,8 @@ primordial <ei>kT</ei> to initiators in the hard-interaction limit.
  
 <parm name="BeamRemnants:halfScaleForKT" default="1.5" min="0."> 
 The scale <ei>Q_half</ei> in the equation above, defining the 
-half-way point between hard and soft interactions. 
+half-way point between hard and soft interactions. For external (LHE)
+events, this parameter is treated as zero. 
 </parm> 
  
 <parm name="BeamRemnants:halfMassForKT" default="1." min="0."> 

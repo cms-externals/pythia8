@@ -50,6 +50,7 @@ bool BeamRemnants::init( Info* infoPtrIn, Settings& settings, Rndm* rndmPtrIn,
 
   // Width of primordial kT distribution.
   doPrimordialKT      = settings.flag("BeamRemnants:primordialKT");
+  doHardKTOnlyLHE     = settings.flag("BeamRemnants:hardKTOnlyLHE");
   primordialKTsoft    = settings.parm("BeamRemnants:primordialKTsoft");
   primordialKThard    = settings.parm("BeamRemnants:primordialKThard");
   primordialKTremnant = settings.parm("BeamRemnants:primordialKTremnant");
@@ -380,14 +381,26 @@ bool BeamRemnants::setKinematics( Event& event) {
     // Allow primordial kT reduction for small-mass and small-pT systems
     // (for hardest interaction pT -> renormalization scale so also 2 -> 1).
     if (doPrimordialKT) {
+      // Les Houches events use primordialKThard.
+      if (iSys == 0 && infoPtr->isLHA() && doHardKTOnlyLHE) {
+        kTwidthNow = primordialKThard;
+      }
+      // Internal processes and MPI use pT-dependent interpolation between
+      // primordialKThard and primordialKTsoft.
+      else {
+        // For hardest interaction pT -> renormalization scale so also 2 -> 1.
+        double scale = (iSys == 0) ? infoPtr->QRen(iDS)
+                                   : partonSystemsPtr->getPTHat(iSys);
+         kTwidthNow = (halfScaleForKT * primordialKTsoft
+           + scale * primordialKThard) / (halfScaleForKT + scale);
+      }
+      // Dampen primordial kT width for very low masses / extreme rapidities.
+      
       double mHat     = sqrt(sHatNow);
       double yDamp    = pow( (event[iInA].e() + event[iInB].e()) / mHat,
                         reducedKTatHighY );
       mHatDamp        = mHat / (mHat + halfMassForKT * yDamp);
-      double scale    = (iSys == 0) ? infoPtr->QRen(iDS)
-                      : partonSystemsPtr->getPTHat(iSys);
-      kTwidthNow      = ( (halfScaleForKT * primordialKTsoft
-      + scale * primordialKThard) / (halfScaleForKT + scale) ) * mHatDamp;
+      kTwidthNow     *= mHatDamp;
     }
 
     // Store properties of compensation systems and total compensation power.
