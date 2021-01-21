@@ -60,6 +60,7 @@ private:
 
   // Initialization data, read from Settings.
   bool   doPrimordialKT, allowRescatter, doRescatterRestoreY, doReconnect;
+  bool   doHardKTOnlyLHE;
   double primordialKTsoft, primordialKThard, primordialKTremnant,
          halfScaleForKT, halfMassForKT, reducedKTatHighY;
   int    remnantMode, reconnectMode;
