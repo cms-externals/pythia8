@@ -26,7 +26,7 @@ namespace Pythia8 {
 const int    ResonanceWidths::NPOINT         = 100;
 
 // The mass of a resonance must not be too small.
-const double ResonanceWidths::MASSMIN        = 0.4;
+const double ResonanceWidths::MASSMIN        = 0.1;
 
 // The sum of product masses must not be too close to the resonance mass.
 const double ResonanceWidths::MASSMARGIN     = 0.1;
