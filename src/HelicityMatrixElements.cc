@@ -1,5 +1,5 @@
 // HelicityMatrixElements.cc is a part of the PYTHIA event generator.
-// Copyright (C) 2019 Philip Ilten, Torbjorn Sjostrand.
+// Copyright (C) 2022 Philip Ilten, Torbjorn Sjostrand.
 // PYTHIA is licenced under the GNU GPL v2 or later, see COPYING for details.
 // Please respect the MCnet Guidelines, see GUIDELINES for details.
 
@@ -19,10 +19,10 @@ namespace Pythia8 {
 // Initialize the helicity matrix element.
 
 void HelicityMatrixElement::initPointers(ParticleData* particleDataPtrIn,
-  Couplings* couplingsPtrIn, Settings* settingsPtrIn) {
+  CoupSM* coupSMPtrIn, Settings* settingsPtrIn) {
 
   particleDataPtr = particleDataPtrIn;
-  couplingsPtr    = couplingsPtrIn;
+  coupSMPtr       = coupSMPtrIn;
   settingsPtr     = settingsPtrIn;
   for(int i = 0; i <= 5; i++)
     gamma.push_back(GammaMatrix(i));
@@ -405,18 +405,18 @@ complex HMETwoFermions2W2TwoFermions::calculateME(vector<int> h) {
 void HMETwoFermions2GammaZ2TwoFermions::initConstants() {
 
   // Set the Weinberg angle.
-  sin2W = couplingsPtr->sin2thetaW();
-  cos2W = couplingsPtr->cos2thetaW();
+  sin2W = coupSMPtr->sin2thetaW();
+  cos2W = coupSMPtr->cos2thetaW();
   // Set the on-shell Z/Z' mass and width.
   zG  = particleDataPtr->mWidth(23);
   zM  = particleDataPtr->m0(23);
   zpG = particleDataPtr->mWidth(32);
   zpM = particleDataPtr->m0(32);
   // Set the Z vector and axial couplings to the fermions.
-  p0CAZ = couplingsPtr->af(abs(pID[0]));
-  p2CAZ = couplingsPtr->af(abs(pID[2]));
-  p0CVZ = couplingsPtr->vf(abs(pID[0]));
-  p2CVZ = couplingsPtr->vf(abs(pID[2]));
+  p0CAZ = coupSMPtr->af(abs(pID[0]));
+  p2CAZ = coupSMPtr->af(abs(pID[2]));
+  p0CVZ = coupSMPtr->vf(abs(pID[0]));
+  p2CVZ = coupSMPtr->vf(abs(pID[2]));
   // Turn off the gamma/Z/Z' channels.
   includeGamma = false;
   includeZ     = false;
@@ -455,6 +455,9 @@ void HMETwoFermions2GammaZ2TwoFermions::initConstants() {
     else if (abs(pID[4]) == 23) includeZ     = true;
     else if (abs(pID[4]) == 32) includeZp    = true;
   }
+  // Massless approximation for ffbar -> Z -> ffbar.
+  sMin = settingsPtr->parm("TauDecays:mMinForZ");
+  if (sMin > 0) sMin = pow2(sMin);
 
 }
 
@@ -477,8 +480,8 @@ void HMETwoFermions2GammaZ2TwoFermions::initWaves(vector<HelicityParticle>& p)
   // Center of mass energy.
   s = max( 1., pow2(p[4].m()));
   // Check if incoming fermions are oriented along z-axis.
-  zaxis = (p[0].pAbs() == fabs(p[0].pz())) &&
-    (p[1].pAbs() == fabs(p[1].pz()));
+  zaxis = (p[0].pAbs() == abs(p[0].pz())) &&
+    (p[1].pAbs() == abs(p[1].pz()));
 
 }
 
@@ -522,9 +525,13 @@ complex HMETwoFermions2GammaZ2TwoFermions::calculateZME(
   vector<int> h, double m, double g, double p0CA, double p2CA, double p0CV,
   double p2CV) {
 
-  complex answer(0,0);
   // Return zero if correct helicity conditions.
-  if (h[0] == h[1] && zaxis) return answer;
+  if (h[0] == h[1] && zaxis) return complex(0,0);
+
+  // Return massless approximation, otherwise full calculation.
+  if (sMin >= 0 && s > sMin) return calculateZMEMasslessFermions(
+    h, m, g, p0CA, p2CA, p0CV, p2CV);
+  complex answer(0,0);
   for (int mu = 0; mu <= 3; mu++) {
     for (int nu = 0; nu <= 3; nu++) {
         answer +=
@@ -535,6 +542,26 @@ complex HMETwoFermions2GammaZ2TwoFermions::calculateZME(
           (u[3][h[pMap[3]]] * gamma[nu] * (p2CV - p2CA * gamma[5]) *
            u[2][h[pMap[2]]]);
     }
+  }
+  return answer / (16 * pow2(sin2W * cos2W) * (s - m*m + complex(0, s*g/m)));
+
+}
+
+//--------------------------------------------------------------------------
+
+// Return Z/Z' element for helicity matrix element.
+
+complex HMETwoFermions2GammaZ2TwoFermions::calculateZMEMasslessFermions(
+  vector<int> h, double m, double g, double p0CA, double p2CA, double p0CV,
+  double p2CV) {
+
+  complex answer(0,0);
+  for (int mu = 0; mu <= 3; mu++) {
+    answer +=
+      (u[1][h[pMap[1]]] * gamma[mu] * (p0CV - p0CA * gamma[5]) *
+        u[0][h[pMap[0]]]) * gamma[4](mu,mu) *
+      (u[3][h[pMap[3]]] * gamma[mu] * (p2CV - p2CA * gamma[5]) *
+        u[2][h[pMap[2]]]);
   }
   return answer / (16 * pow2(sin2W * cos2W) * (s - m*m + complex(0, s*g/m)));
 
@@ -570,6 +597,85 @@ double HMETwoFermions2GammaZ2TwoFermions::zpCoupling(int id, string type) {
 
 //==========================================================================
 
+// Helicity matrix element for two photons -> two fermions.
+
+//--------------------------------------------------------------------------
+
+// Initialize wave functions for the helicity matrix element.
+
+void HMETwoGammas2TwoFermions::initWaves(vector<HelicityParticle>& p) {
+
+  u.clear();
+  pMap.resize(4);
+  // Initialize fermion wave functions.
+  pMap[0] = 0; pMap[1] = 1; pMap[2] = 2; pMap[3] = 3;
+  vector<Wave4> u0, u1;
+  for (int h = 0; h < p[0].spinStates(); h++) u0.push_back(p[0].wave(h));
+  for (int h = 0; h < p[1].spinStates(); h++) u1.push_back(p[1].wave(h));
+  u.push_back(u0);
+  u.push_back(u1);
+  setFermionLine(2, p[2], p[3]);
+  q0 = p[pID[2] > 0 ? 2 : 3].p() - p[0].p();
+  q1 = p[pID[2] > 0 ? 2 : 3].p() - p[1].p();
+  m  = pM[2];
+  tm = q0.m2Calc() - pow2(m);
+  um = q1.m2Calc() - pow2(m);
+
+}
+
+//--------------------------------------------------------------------------
+
+// Return element for the helicity matrix element.
+
+complex HMETwoGammas2TwoFermions::calculateME(vector<int> h) {
+
+  Wave4 &u0(u[0][h[0]]), &u1(u[1][h[1]]), &u2(u[2][h[2]]), &u3(u[3][h[3]]);
+  const complex &u01(u0(1)), &u03(u0(3)), &u11(u1(1)), &u13(u1(3));
+  const complex &u20(u2(0)), &u21(u2(1)), &u22(u2(2)), &u23(u2(3));
+  const complex &u30(u3(0)), &u31(u3(1)), &u32(u3(2)), &u33(u3(3));
+  const double  &q00(q0[0]), &q01(q0[1]), &q03(q0[3]);
+  const double  &q10(q1[0]), &q11(q1[1]), &q13(q1[3]);
+  complex iu02(-u0(2).imag(), u0(2).real()), iu12(-u1(2).imag(), u1(2).real());
+  complex iq02(0, q0[2]), iq12(0, q1[2]);
+  return (u13*(-(m*(u03*u30 + (u01 + iu02)*u31)) + (q00 - q03)*(u03*u32
+    + (u01 + iu02)*u33) - (q01 + iq02)*(u01*u32 - iu02*u32 - u03*u33))*u20
+    + (u11 + iu12)*(m*(-(u01*u30) + iu02*u30 + u03*u31) - (q01 - iq02)
+    *(u03*u32 + (u01 + iu02)*u33) + (q00 + q03)*(u01*u32
+    - iu02*u32 - u03*u33))*u20 + (u11 - iu12)*(-(m*(u03*u30 + (u01 + iu02)
+    *u31)) + (q00 - q03)*(u03*u32 + (u01 + iu02)*u33) - (q01 + iq02)*(u01*u32
+    - iu02*u32 - u03*u33))*u21 - u13*(m*(-(u01*u30) + iu02*u30 + u03*u31)
+    - (q01 - iq02)*(u03*u32 + (u01 + iu02)*u33) + (q00 + q03)*(u01*u32
+    - iu02*u32 - u03*u33))*u21 - u13*(-((q00 + q03)*(u03*u30 + (u01 + iu02)
+    *u31)) + (q01 + iq02)*(-(u01*u30) + iu02*u30 + u03*u31) + m*(u03*u32
+    + (u01 + iu02)*u33))*u22 + (-u11 - iu12)*(-((q01 - iq02)*(u03*u30
+    + (u01 + iu02)*u31)) + (q00 - q03)*(-(u01*u30) + iu02*u30 + u03*u31)
+    + m*(u01*u32 - iu02*u32 - u03*u33))*u22 + (-u11 + iu12)*(-((q00 + q03)
+    *(u03*u30 + (u01 + iu02)*u31)) + (q01 + iq02)*(-(u01*u30) + iu02*u30
+    + u03*u31) + m*(u03*u32 + (u01 + iu02)*u33))*u23 + u13*(-((q01 - iq02)
+    *(u03*u30 + (u01 + iu02)*u31)) + (q00 - q03)*(-(u01*u30) + iu02*u30
+    + u03*u31) + m*(u01*u32 - iu02*u32 - u03*u33))*u23)/tm + (u03
+    *(-(m*(u13*u30 + (u11 + iu12)*u31)) + (q10 - q13)*(u13*u32 + (u11 + iu12)
+    *u33) - (q11 + iq12)*(u11*u32 - iu12*u32 - u13*u33))*u20 + (u01 + iu02)
+    *(m*(-(u11*u30) + iu12*u30 + u13*u31) - (q11 - iq12)*(u13*u32 + (u11
+    + iu12)*u33) + (q10 + q13)*(u11*u32 - iu12*u32 - u13*u33))*u20 + (u01
+    - iu02)*(-(m*(u13*u30 + (u11 + iu12)*u31)) + (q10 - q13)*(u13*u32 + (u11
+    + iu12)*u33) - (q11 + iq12)*(u11*u32 - iu12*u32 - u13*u33))*u21 - u03
+    *(m*(-(u11*u30) + iu12*u30 + u13*u31) - (q11 - iq12)*(u13*u32 + (u11
+    + iu12)*u33) + (q10 + q13)*(u11*u32 - iu12*u32 - u13*u33))*u21 - u03
+    *(-((q10 + q13)*(u13*u30 + (u11 + iu12)*u31)) + (q11 + iq12)*(-(u11*u30)
+    + iu12*u30 + u13*u31) + m*(u13*u32 + (u11 + iu12)*u33))*u22 + (-u01
+    - iu02)*(-((q11 - iq12)*(u13*u30 + (u11 + iu12)*u31)) + (q10 - q13)
+    *(-(u11*u30) + iu12*u30 + u13*u31) + m*(u11*u32 - iu12*u32 - u13*u33))
+    *u22 + (-u01 + iu02)*(-((q10 + q13)*(u13*u30 + (u11 + iu12)*u31)) + (q11
+    + iq12)*(-(u11*u30) + iu12*u30 + u13*u31) + m*(u13*u32 + (u11 + iu12)
+    *u33))*u23 + u03*(-((q11 - iq12)*(u13*u30 + (u11 + iu12)*u31)) + (q10
+    - q13)*(-(u11*u30) + iu12*u30 + u13*u31) + m*(u11*u32 - iu12*u32 - u13
+    *u33))*u23)/um;
+
+}
+
+//==========================================================================
+
 // Helicity matrix element for X -> two fermions.
 
 // Base class for the W, photon, and Z -> two fermions helicity matrix
@@ -583,7 +689,7 @@ void HMEX2TwoFermions::initWaves(vector<HelicityParticle>& p) {
 
   u.clear();
   pMap.resize(4);
-  // Initialize W wave function.
+  // Initialize boson wave function.
   vector< Wave4 > u1;
   pMap[1] = 1;
   for (int h = 0; h < p[pMap[1]].spinStates(); h++)
@@ -678,8 +784,8 @@ complex HMEGamma2TwoFermions::calculateME(vector<int> h) {
 void HMEZ2TwoFermions::initConstants() {
 
   // Set the vector and axial couplings to the fermions.
-  p2CA = couplingsPtr->af(abs(pID[2]));
-  p2CV = couplingsPtr->vf(abs(pID[2]));
+  p2CA = coupSMPtr->af(abs(pID[2]));
+  p2CV = coupSMPtr->vf(abs(pID[2]));
   if (settingsPtr && abs(pID[0]) == 32) {
     p2CA = zpCoupling(abs(pID[2]), "a");
     p2CV = zpCoupling(abs(pID[2]), "v");
@@ -877,7 +983,7 @@ double HMETauDecay::decayWeightMax(vector<HelicityParticle>& p) {
   double on  = real(p[0].rho[0][0]) > real(p[0].rho[1][1]) ?
     real(p[0].rho[0][0]) : real(p[0].rho[1][1]);
   // Determine the maximum off-diagonal element of rho.
-  double off = fabs(real(p[0].rho[0][1])) + fabs(imag(p[0].rho[0][1]));
+  double off = abs(real(p[0].rho[0][1])) + abs(imag(p[0].rho[0][1]));
   return  DECAYWEIGHTMAX * (on + off);
 
 }
