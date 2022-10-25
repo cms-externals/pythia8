@@ -1,5 +1,5 @@
 // TauDecays.cc is a part of the PYTHIA event generator.
-// Copyright (C) 2021 Philip Ilten, Torbjorn Sjostrand.
+// Copyright (C) 2022 Philip Ilten, Torbjorn Sjostrand.
 // PYTHIA is licenced under the GNU GPL v2 or later, see COPYING for details.
 // Please respect the MCnet Guidelines, see GUIDELINES for details.
 
@@ -124,14 +124,16 @@ bool TauDecays::decay(int idxOut1, Event& event) {
   out2        = HelicityParticle(event[idxOut2]);
 
   // Set the mediator of the hard process (also handle no mediator).
-  int idxMediator    = event[idxOut1Top].mother1();
+  int idxMediator = event[idxOut1Top].mother1();
   if (event[idxOut1Top].mother2() > event[idxOut1Top].mother1() &&
       event[idxOut1Top].mother1() == event[idxOut2Top].mother1() &&
       event[idxOut1Top].mother2() == event[idxOut2Top].mother2())
     idxMediator = idxOut1Top;
-  mediator           = HelicityParticle(event[idxMediator]);
-  mediator.direction = -1;
-  if (idxMediator == idxOut1Top) mediator.id(23);
+  mediator = HelicityParticle(event[idxMediator]);
+  if (idxMediator == idxOut1Top) {
+    if (out1.id() == -out2.id()) mediator.id(23);
+    else mediator.id(out1.id() < 0 ? 24 : -24);
+  }
   if (mediator.m() < out1.m() + out2.m()) {
     Vec4 p = out1.p() + out2.p();
     mediator.p(p);
@@ -143,10 +145,10 @@ bool TauDecays::decay(int idxOut1, Event& event) {
   int idxIn1         = event[idxMediatorTop].mother1();
   int idxIn2         = event[idxMediatorTop].mother2();
   in1                = HelicityParticle(event[idxIn1]);
-  in1.direction      = -1;
   in2                = HelicityParticle(event[idxIn2]);
+  in1.direction      = -1;
   in2.direction      = -1;
-
+  
   // Set the particles vector.
   particles.clear();
   particles.push_back(in1);
@@ -196,9 +198,11 @@ bool TauDecays::decay(int idxOut1, Event& event) {
     }
   }
 
-  // Catch unknown production mechanisms.
+  // Unknown production mechanisms, treat as vector boson decay.
   if (!known) {
-    particles[1] = mediator;
+    particles.erase(particles.begin());
+    particles[0] = HelicityParticle(mediator.id(), 0, 0, 0, 0, 0, 0, 0,
+      mediator.p(), mediator.m(), 0, particleDataPtr);
     if (abs(mediator.id()) == 22)
       hardME = hmeGamma2TwoFermions.initChannel(particles);
     else if (abs(mediator.id()) == 23 || abs(mediator.id()) == 32)
@@ -207,7 +211,7 @@ bool TauDecays::decay(int idxOut1, Event& event) {
       hardME = hmeW2TwoFermions.initChannel(particles);
     else if (correlated) {
       Vec4 p = out1.p() + out2.p();
-      particles[1] = HelicityParticle(22, -22, idxIn1, idxIn2, idxOut1,
+      particles[0] = HelicityParticle(22, -22, idxIn1, idxIn2, idxOut1,
         idxOut2, 0, 0, p, p.mCalc(), 0, particleDataPtr);
       hardME = hmeGamma2TwoFermions.initChannel(particles);
       infoPtr->errorMsg("Warning in TauDecays::decay: unknown correlated "
@@ -223,12 +227,13 @@ bool TauDecays::decay(int idxOut1, Event& event) {
 
   // Pick the first tau to decay.
   HelicityParticle* tau;
-  int idx = 2;
-  if (correlated) idx = (rndmPtr->flat() < 0.5) ? 2 : 3;
-  tau = &particles[idx];
+  int idx1 = particles.size() == 3 ? 1 : 2;
+  int idx2 = idx1 + 1;
+  if (correlated && rndmPtr->flat() < 0.5) swap(idx1, idx2);
+  tau = &particles[idx1];
 
   // Calculate the density matrix (if needed) and select channel.
-  if (hardME) hardME->calculateRho(idx, particles);
+  if (hardME) hardME->calculateRho(idx1, particles);
   vector<HelicityParticle> children = createChildren(*tau);
   if (children.size() == 0) return false;
 
@@ -254,15 +259,14 @@ bool TauDecays::decay(int idxOut1, Event& event) {
 
   // If a correlated second tau exists, decay that tau as well.
   if (correlated) {
-    idx = (idx == 2) ? 3 : 2;
     // Calculate the first tau decay matrix.
     decayME->calculateD(children);
     // Update the decay matrix for the tau.
     tau->D = children[0].D;
     // Switch the taus.
-    tau = &particles[idx];
+    tau = &particles[idx2];
     // Calculate second tau's density matrix.
-    if (hardME) hardME->calculateRho(idx, particles);
+    if (hardME) hardME->calculateRho(idx2, particles);
 
     // Decay the second tau.
     children.clear();
@@ -328,7 +332,8 @@ bool TauDecays::internalMechanism(Event&) {
   // Produced from a Higgs.
   } else if (abs(mediator.id()) == 25 || abs(mediator.id()) == 35 ||
              abs(mediator.id()) == 36 || abs(mediator.id()) == 37) {
-    particles[1] = mediator;
+    particles.erase(particles.begin());
+    particles[0] = mediator;
     hardME = hmeHiggs2TwoFermions.initChannel(particles);
 
   // Produced from a D or B hadron decay with a single tau.
