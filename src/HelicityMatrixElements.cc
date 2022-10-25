@@ -688,15 +688,15 @@ complex HMETwoGammas2TwoFermions::calculateME(vector<int> h) {
 void HMEX2TwoFermions::initWaves(vector<HelicityParticle>& p) {
 
   u.clear();
-  pMap.resize(4);
+  pMap.resize(3);
   // Initialize boson wave function.
-  vector< Wave4 > u1;
-  pMap[1] = 1;
-  for (int h = 0; h < p[pMap[1]].spinStates(); h++)
-    u1.push_back(p[pMap[1]].wave(h));
-  u.push_back(u1);
+  vector< Wave4 > u0;
+  pMap[0] = 0;
+  for (int h = 0; h < p[pMap[0]].spinStates(); h++)
+    u0.push_back(p[pMap[0]].waveBar(h));
+  u.push_back(u0);
   // Initialize fermion wave functions.
-  setFermionLine(2, p[2], p[3]);
+  setFermionLine(1, p[1], p[2]);
 
 }
 
@@ -739,8 +739,8 @@ complex HMEW2TwoFermions::calculateME(vector<int> h) {
   complex answer(0,0);
   for (int mu = 0; mu <= 3; mu++) {
     answer +=
-      u[0][h[pMap[1]]](mu) * (u[2][h[pMap[3]]] * gamma[mu]
-                              * (p2CV + p2CA * gamma[5]) *  u[1][h[pMap[2]]]);
+      u[0][h[pMap[0]]](mu) * (u[2][h[pMap[2]]] * gamma[mu]
+                              * (p2CV + p2CA * gamma[5]) *  u[1][h[pMap[1]]]);
   }
   return answer;
 
@@ -762,7 +762,7 @@ complex HMEGamma2TwoFermions::calculateME(vector<int> h) {
   complex answer(0,0);
   for (int mu = 0; mu <= 3; mu++) {
     answer +=
-      u[0][h[pMap[1]]](mu) * (u[2][h[pMap[3]]] * gamma[mu] * u[1][h[pMap[2]]]);
+      u[0][h[pMap[0]]](mu) * (u[2][h[pMap[2]]] * gamma[mu] * u[1][h[pMap[1]]]);
   }
   return answer;
 }
@@ -802,8 +802,8 @@ complex HMEZ2TwoFermions::calculateME(vector<int> h) {
   complex answer(0,0);
   for (int mu = 0; mu <= 3; mu++) {
     answer +=
-      u[0][h[pMap[1]]](mu) * (u[2][h[pMap[3]]] * gamma[mu]
-                              * (p2CV - p2CA * gamma[5]) *  u[1][h[pMap[2]]]);
+      u[0][h[pMap[0]]](mu) * (u[2][h[pMap[2]]] * gamma[mu]
+                              * (p2CV - p2CA * gamma[5]) *  u[1][h[pMap[1]]]);
   }
   return answer;
 }
@@ -870,15 +870,15 @@ void HMEHiggs2TwoFermions::initConstants() {
 
   // Set the H4 constants.
   p2CA = 0; p2CV = 0;
-  if (abs(pID[1]) == 37) {
-    p2CA = pID[1] == 37 ? 1 : -1; p2CV = 1;
+  if (abs(pID[0]) == 37) {
+    p2CA = pID[0] == 37 ? 1 : -1; p2CV = 1;
 
   // Neutral constants; settings available.
   } else if (settingsPtr) {
     int mode;
     double eta, phi;
     // Set the H1 mixing.
-    if (abs(pID[1]) == 25) {
+    if (abs(pID[0]) == 25) {
       mode = settingsPtr->mode("HiggsH1:parity");
       eta  = settingsPtr->parm("HiggsH1:etaParity");
       phi  = settingsPtr->parm("HiggsH1:phiParity");
@@ -887,7 +887,7 @@ void HMEHiggs2TwoFermions::initConstants() {
       else if (mode == 4) {p2CA = cos(phi); p2CV = complex(0, 1) * sin(phi);}
       else                {p2CA = 0;        p2CV = complex(0, 1);}
     // Set the H2 mixing.
-    } else if (abs(pID[1]) == 35) {
+    } else if (abs(pID[0]) == 35) {
       mode = settingsPtr->mode("HiggsH2:parity");
       eta  = settingsPtr->parm("HiggsH2:etaParity");
       phi  = settingsPtr->parm("HiggsH2:phiParity");
@@ -896,7 +896,7 @@ void HMEHiggs2TwoFermions::initConstants() {
       else if (mode == 4) {p2CA = cos(phi); p2CV = complex(0, 1) * sin(phi);}
       else                {p2CA = 0;        p2CV = complex(0, 1);}
     // Set the A3 mixing.
-    } else if (abs(pID[1]) == 36) {
+    } else if (abs(pID[0]) == 36) {
       mode = settingsPtr->mode("HiggsA3:parity");
       eta  = settingsPtr->parm("HiggsA3:etaParity");
       phi  = settingsPtr->parm("HiggsA3:phiParity");
@@ -908,9 +908,9 @@ void HMEHiggs2TwoFermions::initConstants() {
 
   // Neutral constants; default SM/MSSM.
   } else {
-    if      (abs(pID[1]) == 25) {p2CA = 0; p2CV = complex(0, 1);}
-    else if (abs(pID[1]) == 35) {p2CA = 0; p2CV = complex(0, 1);}
-    else if (abs(pID[1]) == 36) {p2CA = 1; p2CV = 0;}
+    if      (abs(pID[0]) == 25) {p2CA = 0; p2CV = complex(0, 1);}
+    else if (abs(pID[0]) == 35) {p2CA = 0; p2CV = complex(0, 1);}
+    else if (abs(pID[0]) == 36) {p2CA = 1; p2CV = 0;}
   }
 }
 
@@ -921,8 +921,8 @@ void HMEHiggs2TwoFermions::initConstants() {
 void HMEHiggs2TwoFermions::initWaves(vector<HelicityParticle>& p) {
 
   u.clear();
-  pMap.resize(4);
-  setFermionLine(2, p[2], p[3]);
+  pMap.resize(3);
+  setFermionLine(1, p[1], p[2]);
 
 }
 
@@ -932,7 +932,7 @@ void HMEHiggs2TwoFermions::initWaves(vector<HelicityParticle>& p) {
 
 complex HMEHiggs2TwoFermions::calculateME(vector<int> h) {
 
-  return (u[1][h[pMap[3]]] * (p2CV + p2CA * gamma[5]) * u[0][h[pMap[2]]]);
+  return (u[1][h[pMap[2]]] * (p2CV + p2CA * gamma[5]) * u[0][h[pMap[1]]]);
 
 }
 
