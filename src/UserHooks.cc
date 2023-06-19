@@ -246,15 +246,18 @@ double SuppressSmallPT::multiplySigmaBy( const SigmaProcess* sigmaProcessPtr,
     // alternatively as for hard processes.
     double alphaSvalue;
     int    alphaSorder;
+    bool   alphaSfixRun;
     int    alphaSnfmax = settingsPtr->mode("StandardModel:alphaSnfmax");
     if (useSameAlphaSasMPI) {
       alphaSvalue = settingsPtr->parm("MultipartonInteractions:alphaSvalue");
       alphaSorder = settingsPtr->mode("MultipartonInteractions:alphaSorder");
+      alphaSfixRun = settingsPtr->flag("MultipartonInteractions:alphaSfixRun");
     } else {
       alphaSvalue = settingsPtr->parm("SigmaProcess:alphaSvalue");
       alphaSorder = settingsPtr->mode("SigmaProcess:alphaSorder");
+      alphaSfixRun = settingsPtr->flag("SigmaProcess:alphaSfixRun");
     }
-    alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, false);
+    alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, false, alphaSfixRun);
 
     // Initialization finished.
     isInit = true;

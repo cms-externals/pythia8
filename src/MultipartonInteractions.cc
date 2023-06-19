@@ -385,6 +385,7 @@ bool MultipartonInteractions::init( bool doMPIinit, int iDiffSysIn,
   //  Parameters of alphaStrong generation.
   alphaSvalue    = settings.parm("MultipartonInteractions:alphaSvalue");
   alphaSorder    = settings.mode("MultipartonInteractions:alphaSorder");
+  alphaSfixRun   = settings.flag("MultipartonInteractions:alphaSfixRun");
   alphaSnfmax    = settings.mode("StandardModel:alphaSnfmax");
 
   // Parameters of alphaEM generation.
@@ -502,7 +503,7 @@ bool MultipartonInteractions::init( bool doMPIinit, int iDiffSysIn,
   enhanceBavg    = 1.;
 
   // Initialize alpha_strong generation.
-  alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, false);
+  alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, false, alphaSfixRun);
   double Lambda3 = alphaS.Lambda3();
 
   // Initialize alphaEM generation.

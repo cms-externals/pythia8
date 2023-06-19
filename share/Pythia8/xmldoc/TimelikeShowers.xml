@@ -188,6 +188,12 @@ not go to second order there is no strong reason to use this option,
 but there is also nothing wrong with it.</option> 
 </modepick> 
  
+<flag name="TimeShower:alphaSfixRun" default="off"> 
+<option value="off">Do not apply the fix for 2-loop running. </option> 
+<option value="on">Apply the fix for 2-loop running, backported from 8.309. 
+</option> 
+</flag> 
+ 
 <p/> 
 The CMW rescaling of <ei>Lambda_QCD</ei> (see the section on 
 <aloc href="StandardModelParameters">StandardModelParameters</aloc>) 

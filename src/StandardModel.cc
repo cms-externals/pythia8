@@ -40,7 +40,7 @@ const double AlphaStrong::FACCMW6         = 1.513;
 // Initialize alpha_strong calculation by finding Lambda values etc.
 
 void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
-  bool useCMWIn) {
+  bool useCMWIn, bool fixRunningIn) {
 
   // Set default mass thresholds if not already done
   if (mt <= 1.) setThresholds(1.5, 4.8, 171.0);
@@ -50,6 +50,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
   order    = max( 0, min( 3, orderIn ) );
   nfmax    = max( 5, min( 6, nfmaxIn ) );
   useCMW   = useCMWIn;
+  fixRunning = fixRunningIn;
   lastCallToFull = false;
   Lambda3Save = Lambda4Save = Lambda5Save = Lambda6Save = scale2Min = 0.;
 
@@ -83,7 +84,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
       logScale    = 2. * log(MZ/Lambda5Save);
       loglogScale = log(logScale);
       correction  = 1. - b15 * loglogScale / logScale;
-      if (order == 3) correction
+      if (order == 3 || !fixRunning) correction
         += pow2(b15 / logScale) * (pow2(loglogScale - 0.5) + b25 - 1.25);
       valueIter   = valueRef / correction;
       Lambda5Save = MZ * exp( -6. * M_PI / (23. * valueIter) );
@@ -93,7 +94,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
     double logScaleT    = 2. * log(mt/Lambda5Save);
     double loglogScaleT = log(logScaleT);
     correction =  1. - b15 * loglogScaleT / logScaleT;
-    if (order == 3) correction
+    if (order == 3 || !fixRunning) correction
       += pow2(b15 / logScaleT) * (pow2(loglogScaleT - 0.5) + b25 - 1.25);
     double valueT       = 12. * M_PI / (23. * logScaleT) * correction;
     Lambda6Save         = Lambda5Save;
@@ -101,7 +102,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
       logScale    = 2. * log(mt/Lambda6Save);
       loglogScale = log(logScale);
       correction  = 1. - b16 * loglogScale / logScale;
-      if (order == 3) correction
+      if (order == 3 || !fixRunning) correction
         += pow2(b16 / logScale) * (pow2(loglogScale - 0.5) + b26 - 1.25);
       valueIter   = valueT / correction;
       Lambda6Save = mt * exp( -6. * M_PI / (21. * valueIter) );
@@ -111,7 +112,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
     double logScaleB    = 2. * log(mb/Lambda5Save);
     double loglogScaleB = log(logScaleB);
     correction = 1. - b15 * loglogScaleB / logScaleB;
-    if (order == 3) correction
+    if (order == 3 || !fixRunning) correction
       += pow2(b15 / logScaleB) * (pow2(loglogScaleB - 0.5) + b25- 1.25);
     double valueB       = 12. * M_PI / (23. * logScaleB) * correction;
     Lambda4Save         = Lambda5Save;
@@ -119,7 +120,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
       logScale    = 2. * log(mb/Lambda4Save);
       loglogScale = log(logScale);
       correction  = 1. - b14 * loglogScale / logScale;
-      if (order == 3) correction
+      if (order == 3 || !fixRunning) correction
         += pow2(b14 / logScale) * (pow2(loglogScale - 0.5) + b24 - 1.25);
       valueIter   = valueB / correction;
       Lambda4Save = mb * exp( -6. * M_PI / (25. * valueIter) );
@@ -129,7 +130,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
     double logScaleC    = 2. * log(mc/Lambda4Save);
     double loglogScaleC = log(logScaleC);
     correction = 1. - b14 * loglogScaleC / logScaleC;
-    if (order == 3) correction
+    if (order == 3 || !fixRunning) correction
       += pow2(b14 / logScaleC) * (pow2(loglogScaleC - 0.5) + b24 - 1.25);
     double valueC       = 12. * M_PI / (25. * logScaleC) * correction;
     Lambda3Save = Lambda4Save;
@@ -137,7 +138,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
       logScale    = 2. * log(mc/Lambda3Save);
       loglogScale = log(logScale);
       correction  = 1. - b13 * loglogScale / logScale;
-      if (order == 3) correction
+      if (order == 3 || !fixRunning) correction
         += pow2(b13 / logScale) * (pow2(loglogScale - 0.5) + b23 - 1.25);
       valueIter   = valueC / correction;
       Lambda3Save = mc * exp( -6. * M_PI / (27. * valueIter) );
@@ -226,7 +227,7 @@ double AlphaStrong::alphaS( double scale2) {
     double logScale    = log(scale2/Lambda2);
     double loglogScale = log(logScale);
     double correction  = 1. - b1 * loglogScale / logScale;
-    if (order == 3) correction
+    if (order == 3 || !fixRunning) correction
       += pow2(b1 / logScale) * (pow2(loglogScale - 0.5) + b2 - 1.25);
     valueNow = 12. * M_PI / (b0 * logScale) * correction;
   }
@@ -307,7 +308,7 @@ double AlphaStrong::alphaS2OrdCorr( double scale2) {
   double logScale    = log(scale2/Lambda2);
   double loglogScale = log(logScale);
   double correction  = 1. - b1 * loglogScale / logScale;
-  if (order == 3) correction
+  if (order == 3 || !fixRunning) correction
     += pow2(b1 / logScale) * (pow2(loglogScale - 0.5) + b2 - 1.25);
   return correction;
 
@@ -446,8 +447,9 @@ void CoupSM::init(Settings& settings, Rndm* rndmPtrIn) {
   // Initialize the local AlphaStrong instance.
   double alphaSvalue  = settings.parm("SigmaProcess:alphaSvalue");
   int    alphaSorder  = settings.mode("SigmaProcess:alphaSorder");
+  int    alphaSfixRun = settings.flag("SigmaProcess:alphaSfixRun");
   int    alphaSnfmax  = settings.mode("StandardModel:alphaSnfmax");
-  alphaSlocal.init( alphaSvalue, alphaSorder, alphaSnfmax, false);
+  alphaSlocal.init( alphaSvalue, alphaSorder, alphaSnfmax, false, alphaSfixRun);
 
   // Initialize the local AlphaEM instance.
   int order = settings.mode("SigmaProcess:alphaEMorder");

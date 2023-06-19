@@ -28,7 +28,7 @@ public:
   AlphaStrong() : isInit(false), order(0), nfmax(),
     Lambda3Save(0.), Lambda4Save(0.), Lambda5Save(0.), Lambda6Save(0.),
     Lambda3Save2(0.), Lambda4Save2(0.), Lambda5Save2(0.), Lambda6Save2(0.),
-    scale2Min(0.), mc(0.), mb(0.), mt(0.), mc2(0.), mb2(0.), mt2(0.), useCMW(),
+    scale2Min(0.), mc(0.), mb(0.), mt(0.), mc2(0.), mb2(0.), mt2(0.), useCMW(), fixRunning(),
     lastCallToFull(false), valueRef(0.), valueNow(0.), scale2Now(0.) {}
 
   // Destructor.
@@ -36,7 +36,7 @@ public:
 
   // Initialization for given value at M_Z and given order.
   virtual void init(double valueIn = 0.12, int orderIn = 1, int nfmaxIn = 6,
-    bool useCMWIn = false);
+    bool useCMWIn = false, bool fixRunningIn = false);
 
   // Set flavour threshold values: m_c, m_b, m_t.
   virtual void setThresholds(double mcIn, double mbIn, double mtIn) {
@@ -81,6 +81,8 @@ protected:
 
   // CMW rescaling factors.
   bool useCMW;
+  // Fix alphaS running (backported from 8.309)
+  bool fixRunning;
   static const double FACCMW3, FACCMW4, FACCMW5, FACCMW6;
 
   // Safety margins to avoid getting too close to LambdaQCD.

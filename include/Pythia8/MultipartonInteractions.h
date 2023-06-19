@@ -214,7 +214,7 @@ private:
                       SIGMAMBLIMIT;
 
   // Initialization data, read from Settings.
-  bool   allowRescatter, allowDoubleRes, canVetoMPI, doPartonVertex;
+  bool   allowRescatter, allowDoubleRes, canVetoMPI, doPartonVertex, alphaSfixRun;
   int    pTmaxMatch, alphaSorder, alphaEMorder, alphaSnfmax, bProfile,
          processLevel, bSelScale, rescatterMode, nQuarkIn, nSample,
          enhanceScreening, pT0paramMode;

@@ -1839,6 +1839,7 @@ void Settings::resetTuneEE() {
   // FSR: strong coupling, IR cutoff.
   resetParm("TimeShower:alphaSvalue");
   resetMode("TimeShower:alphaSorder");
+  resetFlag("TimeShower:alphaSfixRun");
   resetFlag("TimeShower:alphaSuseCMW");
   resetParm("TimeShower:pTmin");
   resetParm("TimeShower:pTminChgQ");
@@ -1872,6 +1873,7 @@ void Settings::resetTunePP() {
   // ISR: strong coupling, IR cutoff, coherence and spin correlations.
   resetParm("SpaceShower:alphaSvalue");
   resetMode("SpaceShower:alphaSorder");
+  resetParm("SpaceShower:alphaSfixRun");
   resetParm("SpaceShower:alphaSuseCMW");
   resetFlag("SpaceShower:samePTasMPI");
   resetParm("SpaceShower:pT0Ref");
@@ -1886,6 +1888,8 @@ void Settings::resetTunePP() {
 
   // MPI: strong coupling, IR regularization, energy scaling.
   resetParm("MultipartonInteractions:alphaSvalue");
+  resetMode("MultipartonInteractions:alphaSorder");
+  resetParm("MultipartonInteractions:alphaSfixRun");
   resetParm("MultipartonInteractions:pT0Ref");
   resetParm("MultipartonInteractions:ecmRef");
   resetParm("MultipartonInteractions:ecmPow");

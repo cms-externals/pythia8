@@ -124,12 +124,13 @@ void SimpleTimeShower::init( BeamParticle* beamAPtrIn,
   // Parameters of alphaStrong generation.
   alphaSvalue        = settingsPtr->parm("TimeShower:alphaSvalue");
   alphaSorder        = settingsPtr->mode("TimeShower:alphaSorder");
+  alphaSfixRun       = settingsPtr->flag("TimeShower:alphaSfixRun");
   alphaSnfmax        = settingsPtr->mode("StandardModel:alphaSnfmax");
   alphaSuseCMW       = settingsPtr->flag("TimeShower:alphaSuseCMW");
   alphaS2pi          = 0.5 * alphaSvalue / M_PI;
 
   // Initialize alphaStrong generation.
-  alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, alphaSuseCMW);
+  alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, alphaSuseCMW, alphaSfixRun);
 
   // Lambda for 5, 4 and 3 flavours.
   Lambda3flav        = alphaS.Lambda3();

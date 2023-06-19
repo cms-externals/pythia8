@@ -99,6 +99,12 @@ not go to second order there is no strong reason to use this option,
 but there is also nothing wrong with it.</option> 
 </modepick> 
  
+<flag name="MultipartonInteractions:alphaSfixRun" default="off"> 
+<option value="off">Do not apply the fix for 2-loop running. </option> 
+<option value="on">Apply the fix for 2-loop running, backported from 8.309. 
+</option> 
+</flag> 
+ 
 <p/> 
 QED interactions are regulated by the <ei>alpha_electromagnetic</ei> 
 value at the <ei>pT^2</ei> scale of an interaction. 
