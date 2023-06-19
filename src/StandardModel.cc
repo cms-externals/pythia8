@@ -47,8 +47,8 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
 
   // Order of alpha_s evaluation.Default values.
   valueRef = valueIn;
-  order    = max( 0, min( 2, orderIn ) );
-  nfmax    = max(5,min(6,nfmaxIn));
+  order    = max( 0, min( 3, orderIn ) );
+  nfmax    = max( 5, min( 6, nfmaxIn ) );
   useCMW   = useCMWIn;
   lastCallToFull = false;
   Lambda3Save = Lambda4Save = Lambda5Save = Lambda6Save = scale2Min = 0.;
@@ -63,27 +63,28 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
     Lambda4Save = Lambda5Save * pow(mb/Lambda5Save, 2./25.);
     Lambda3Save = Lambda4Save * pow(mc/Lambda4Save, 2./27.);
 
-  // Second order alpha_s: iterative match at flavour thresholds.
+  // Second or third order alpha_s: iterative match at flavour thresholds.
   } else {
-    // The one-loop coefficients: b1 / b0^2
+    // The two-loop coefficients: b1 / b0^2
     double b16 = 234. / 441.;
     double b15 = 348. / 529.;
     double b14 = 462. / 625.;
     double b13 = 576. / 729.;
-    // The two-loop coefficients: b2 * b0 / b1^2
+    // The three-loop coefficients: b2 * b0 / b1^2
     double b26 = -36855. / 109512.;
     double b25 = 224687. / 242208.;
     double b24 = 548575. / 426888.;
     double b23 = 938709. / 663552.;
 
     double logScale, loglogScale, correction, valueIter;
-    // Find Lambda_5 at m_Z, starting from one-loop value
+    // Find Lambda_5 at m_Z, starting from one-loop value.
     Lambda5Save = MZ * exp( -6. * M_PI / (23. * valueRef) );
     for (int iter = 0; iter < NITER; ++iter) {
       logScale    = 2. * log(MZ/Lambda5Save);
       loglogScale = log(logScale);
-      correction  = 1. - b15 * loglogScale / logScale
-        + pow2(b15 / logScale) * (pow2(loglogScale - 0.5) + b25 - 1.25);
+      correction  = 1. - b15 * loglogScale / logScale;
+      if (order == 3) correction
+        += pow2(b15 / logScale) * (pow2(loglogScale - 0.5) + b25 - 1.25);
       valueIter   = valueRef / correction;
       Lambda5Save = MZ * exp( -6. * M_PI / (23. * valueIter) );
     }
@@ -91,15 +92,17 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
     // Find Lambda_6 at m_t, by requiring alphaS(nF=6,m_t) = alphaS(nF=5,m_t)
     double logScaleT    = 2. * log(mt/Lambda5Save);
     double loglogScaleT = log(logScaleT);
-    double valueT       = 12. * M_PI / (23. * logScaleT)
-      * (1. - b15 * loglogScaleT / logScaleT
-        + pow2(b15 / logScaleT) * (pow2(loglogScaleT - 0.5) + b25 - 1.25) );
+    correction =  1. - b15 * loglogScaleT / logScaleT;
+    if (order == 3) correction
+      += pow2(b15 / logScaleT) * (pow2(loglogScaleT - 0.5) + b25 - 1.25);
+    double valueT       = 12. * M_PI / (23. * logScaleT) * correction;
     Lambda6Save         = Lambda5Save;
     for (int iter = 0; iter < NITER; ++iter) {
       logScale    = 2. * log(mt/Lambda6Save);
       loglogScale = log(logScale);
-      correction  = 1. - b16 * loglogScale / logScale
-        + pow2(b16 / logScale) * (pow2(loglogScale - 0.5) + b26 - 1.25);
+      correction  = 1. - b16 * loglogScale / logScale;
+      if (order == 3) correction
+        += pow2(b16 / logScale) * (pow2(loglogScale - 0.5) + b26 - 1.25);
       valueIter   = valueT / correction;
       Lambda6Save = mt * exp( -6. * M_PI / (21. * valueIter) );
     }
@@ -107,30 +110,35 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
     // Find Lambda_4 at m_b, by requiring alphaS(nF=4,m_b) = alphaS(nF=5,m_b)
     double logScaleB    = 2. * log(mb/Lambda5Save);
     double loglogScaleB = log(logScaleB);
-    double valueB       = 12. * M_PI / (23. * logScaleB)
-      * (1. - b15 * loglogScaleB / logScaleB
-        + pow2(b15 / logScaleB) * (pow2(loglogScaleB - 0.5) + b25- 1.25) );
+    correction = 1. - b15 * loglogScaleB / logScaleB;
+    if (order == 3) correction
+      += pow2(b15 / logScaleB) * (pow2(loglogScaleB - 0.5) + b25- 1.25);
+    double valueB       = 12. * M_PI / (23. * logScaleB) * correction;
     Lambda4Save         = Lambda5Save;
     for (int iter = 0; iter < NITER; ++iter) {
       logScale    = 2. * log(mb/Lambda4Save);
       loglogScale = log(logScale);
-      correction  = 1. - b14 * loglogScale / logScale
-        + pow2(b14 / logScale) * (pow2(loglogScale - 0.5) + b24 - 1.25);
+      correction  = 1. - b14 * loglogScale / logScale;
+      if (order == 3) correction
+        += pow2(b14 / logScale) * (pow2(loglogScale - 0.5) + b24 - 1.25);
       valueIter   = valueB / correction;
       Lambda4Save = mb * exp( -6. * M_PI / (25. * valueIter) );
-    }
+     }
+
     // Find Lambda_3 at m_c, by requiring alphaS(nF=3,m_c) = alphaS(nF=4,m_c)
     double logScaleC    = 2. * log(mc/Lambda4Save);
     double loglogScaleC = log(logScaleC);
-    double valueC       = 12. * M_PI / (25. * logScaleC)
-      * (1. - b14 * loglogScaleC / logScaleC
-        + pow2(b14 / logScaleC) * (pow2(loglogScaleC - 0.5) + b24 - 1.25) );
+    correction = 1. - b14 * loglogScaleC / logScaleC;
+    if (order == 3) correction
+      += pow2(b14 / logScaleC) * (pow2(loglogScaleC - 0.5) + b24 - 1.25);
+    double valueC       = 12. * M_PI / (25. * logScaleC) * correction;
     Lambda3Save = Lambda4Save;
     for (int iter = 0; iter < NITER; ++iter) {
       logScale    = 2. * log(mc/Lambda3Save);
       loglogScale = log(logScale);
-      correction  = 1. - b13 * loglogScale / logScale
-        + pow2(b13 / logScale) * (pow2(loglogScale - 0.5) + b23 - 1.25);
+      correction  = 1. - b13 * loglogScale / logScale;
+      if (order == 3) correction
+        += pow2(b13 / logScale) * (pow2(loglogScale - 0.5) + b23 - 1.25);
       valueIter   = valueC / correction;
       Lambda3Save = mc * exp( -6. * M_PI / (27. * valueIter) );
     }
@@ -146,7 +154,7 @@ void AlphaStrong::init( double valueIn, int orderIn, int nfmaxIn,
 
   // Impose SAFETYMARGINs to prevent getting too close to LambdaQCD.
   if (order == 1) scale2Min = pow2(SAFETYMARGIN1 * Lambda3Save);
-  else if (order == 2) scale2Min = pow2(SAFETYMARGIN2 * Lambda3Save);
+  else if (order > 1) scale2Min = pow2(SAFETYMARGIN2 * Lambda3Save);
 
   // Save squares of mass and Lambda values as well.
   Lambda3Save2 = pow2(Lambda3Save);
@@ -217,9 +225,10 @@ double AlphaStrong::alphaS( double scale2) {
     }
     double logScale    = log(scale2/Lambda2);
     double loglogScale = log(logScale);
-    valueNow = 12. * M_PI / (b0 * logScale)
-      * ( 1. - b1 * loglogScale / logScale
-        + pow2(b1 / logScale) * (pow2(loglogScale - 0.5) + b2 - 1.25) );
+    double correction  = 1. - b1 * loglogScale / logScale;
+    if (order == 3) correction
+      += pow2(b1 / logScale) * (pow2(loglogScale - 0.5) + b2 - 1.25);
+    valueNow = 12. * M_PI / (b0 * logScale) * correction;
   }
 
   // Done.
@@ -247,7 +256,7 @@ double  AlphaStrong::alphaS1Ord( double scale2) {
   if (order == 0) {
     valueNow = valueRef;
 
-  // First/second order alpha_s: differs by mass region.
+  // First/second/third order alpha_s: differs by mass region.
   } else {
     if (scale2 > mt2 && nfmax >= 6)
          valueNow = 12. * M_PI / (21. * log(scale2/Lambda6Save2));
@@ -264,7 +273,7 @@ double  AlphaStrong::alphaS1Ord( double scale2) {
 
 //--------------------------------------------------------------------------
 
-// Calculates the second-order extra factor in alpha_s.
+// Calculates the second- or third-order extra factor in alpha_s.
 // (To be combined with alphaS1Ord.)
 
 double AlphaStrong::alphaS2OrdCorr( double scale2) {
@@ -297,8 +306,10 @@ double AlphaStrong::alphaS2OrdCorr( double scale2) {
   }
   double logScale    = log(scale2/Lambda2);
   double loglogScale = log(logScale);
-  return ( 1. - b1 * loglogScale / logScale
-    + pow2(b1 / logScale) * (pow2(loglogScale - 0.5) + b2 - 1.25) );
+  double correction  = 1. - b1 * loglogScale / logScale;
+  if (order == 3) correction
+    += pow2(b1 / logScale) * (pow2(loglogScale - 0.5) + b2 - 1.25);
+  return correction;
 
 }
 
