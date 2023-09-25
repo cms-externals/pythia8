@@ -163,7 +163,7 @@ private:
   bool   doQCDshower, doQEDshowerByQ, doQEDshowerByL, useSamePTasMPI,
          doWeakShower, doMEcorrections, doMEafterFirst, doPhiPolAsym,
          doPhiPolAsymHard, doPhiIntAsym, doRapidityOrder, useFixedFacScale,
-         doSecondHard, canVetoEmission, hasUserHooks, alphaSuseCMW,
+         doSecondHard, canVetoEmission, hasUserHooks, alphaSuseCMW, alphaSfixRun,
          singleWeakEmission, vetoWeakJets, weakExternal, doRapidityOrderMPI,
          doMPI, doDipoleRecoil, doPartonVertex;
   int    pTmaxMatch, pTdampMatch, alphaSorder, alphaSnfmax, alphaEMorder,

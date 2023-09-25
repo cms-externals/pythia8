@@ -135,12 +135,13 @@ void SimpleSpaceShower::init( BeamParticle* beamAPtrIn,
   // Parameters of alphaStrong generation.
   alphaSvalue     = settingsPtr->parm("SpaceShower:alphaSvalue");
   alphaSorder     = settingsPtr->mode("SpaceShower:alphaSorder");
+  alphaSfixRun    = settingsPtr->flag("SpaceShower:alphaSfixRun");
   alphaSnfmax     = settingsPtr->mode("StandardModel:alphaSnfmax");
   alphaSuseCMW    = settingsPtr->flag("SpaceShower:alphaSuseCMW");
   alphaS2pi       = 0.5 * alphaSvalue / M_PI;
 
   // Initialize alpha_strong generation.
-  alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, alphaSuseCMW);
+  alphaS.init( alphaSvalue, alphaSorder, alphaSnfmax, alphaSuseCMW, alphaSfixRun);
 
   // Lambda for 5, 4 and 3 flavours.
   Lambda5flav     = alphaS.Lambda5();

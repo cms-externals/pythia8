@@ -2049,15 +2049,17 @@ void MergingHooks::init(){
   // Initialise AlphaS objects for reweighting
   double alphaSvalueFSR = settingsPtr->parm("TimeShower:alphaSvalue");
   int    alphaSorderFSR = settingsPtr->mode("TimeShower:alphaSorder");
+  bool   alphaSfixRunFSR= settingsPtr->flag("TimeShower:alphaSfixRun");
   int    alphaSnfmax    = settingsPtr->mode("StandardModel:alphaSnfmax");
   int    alphaSuseCMWFSR= settingsPtr->flag("TimeShower:alphaSuseCMW");
   AlphaS_FSRSave.init(alphaSvalueFSR, alphaSorderFSR, alphaSnfmax,
-    alphaSuseCMWFSR);
+    alphaSuseCMWFSR, alphaSfixRunFSR);
   double alphaSvalueISR = settingsPtr->parm("SpaceShower:alphaSvalue");
   int    alphaSorderISR = settingsPtr->mode("SpaceShower:alphaSorder");
+  bool   alphaSfixRunISR= settingsPtr->flag("SpaceShower:alphaSfixRun");
   int    alphaSuseCMWISR= settingsPtr->flag("SpaceShower:alphaSuseCMW");
   AlphaS_ISRSave.init(alphaSvalueISR, alphaSorderISR, alphaSnfmax,
-    alphaSuseCMWISR);
+    alphaSuseCMWISR, alphaSfixRunISR);
 
   // Initialise AlphaEM objects for reweighting
   int    alphaEMFSRorder = settingsPtr->mode("TimeShower:alphaEMorder");

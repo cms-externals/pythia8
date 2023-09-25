@@ -179,7 +179,7 @@ private:
          allowBeamRecoil, dampenBeamRecoil, recoilToColoured, useFixedFacScale,
          allowRescatter, canVetoEmission, doHVshower, brokenHVsym,
          globalRecoil, useLocalRecoilNow, doSecondHard, hasUserHooks,
-         singleWeakEmission, alphaSuseCMW, vetoWeakJets, allowMPIdipole,
+         singleWeakEmission, alphaSuseCMW, alphaSfixRun, vetoWeakJets, allowMPIdipole,
          weakExternal, recoilDeadCone,  doDipoleRecoil, doPartonVertex;
   int    pTmaxMatch, pTdampMatch, alphaSorder, alphaSnfmax, nGluonToQuark,
          weightGluonToQuark, alphaEMorder, nGammaToQuark, nGammaToLepton,
